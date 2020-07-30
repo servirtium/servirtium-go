@@ -15,16 +15,6 @@ import (
 	"github.com/kr/pretty"
 )
 
-// IServirtium ...
-type IServirtium interface {
-	StartRecord(apiURL string)
-	WriteRecord(recordFileName string)
-	CheckMarkdownIsDifferentToPreviousRecording(recordFileName string) bool
-	EndRecord()
-	StartPlayback(recordFileName string)
-	EndPlayback(recordFileName string)
-}
-
 // Impl ...
 type Impl struct {
 	ServerPlayback  *httptest.Server
@@ -47,7 +37,7 @@ func (s *Impl) StartPlayback(recordFileName string) {
 }
 
 // EndPlayback ...
-func (s *Impl) EndPlayback(recordFileName string) {
+func (s *Impl) EndPlayback() {
 	s.ServerPlayback.Close()
 }
 
@@ -79,7 +69,7 @@ func (s *Impl) anualAvgHandlerPlayback(recordFileName string) func(w http.Respon
 
 // StartRecord ...
 func (s *Impl) StartRecord(apiURL string) {
-	s.initRecordServer()
+	s.initRecordServer(apiURL)
 	s.ServerRecord.Start()
 }
 
@@ -112,7 +102,7 @@ func (s *Impl) initRecordServer(apiURL string) {
 		log.Fatal(err)
 	}
 	r := mux.NewRouter()
-	r.PathPrefix("/").HandlerFunc(s.manInTheMiddleHandler(apiURL string))
+	r.PathPrefix("/").HandlerFunc(s.manInTheMiddleHandler(apiURL))
 	ts := httptest.NewUnstartedServer(r)
 
 	// NewUnstartedServer creates a listener. Close that listener and replace
