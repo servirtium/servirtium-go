@@ -12,22 +12,28 @@ import (
 	"text/template"
 
 	"github.com/gorilla/mux"
-	"github.com/kr/pretty"
 )
 
 // Impl ...
 type Impl struct {
-	ServerPlayback  *httptest.Server
-	ServerRecord    *httptest.Server
-	RequestSequence int64
-	Content         string
+	ServerPlayback            *httptest.Server
+	ServerRecord              *httptest.Server
+	requestSequence           int64
+	content                   string
+	requestHeadersNeedDel     []string
+	requestHeadersNeedMask    map[string]string
+	requestHeadersNeedReplace map[string]string
+	responseHeadersNeedDel    []string
+	responseHeadersNeedMask   map[string]string
 }
 
 // NewServirtium ...
 func NewServirtium() *Impl {
 	return &Impl{
-		RequestSequence: 0,
-		Content:         "",
+		requestSequence:        0,
+		content:                "",
+		requestHeadersNeedDel:  []string{},
+		responseHeadersNeedDel: []string{},
 	}
 }
 
@@ -61,7 +67,6 @@ func (s *Impl) anualAvgHandlerPlayback(recordFileName string) func(w http.Respon
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		w.Header().Set("Content-Type", "application/xml")
 		_, _ = w.Write(data)
 		return
 	}
@@ -82,10 +87,9 @@ func (s *Impl) WriteRecord(recordFileName string) {
 	filePath := fmt.Sprintf("%s/mock/%s.md", workingPath, recordFileName)
 	markdownExists := s.checkMarkdownExists(filePath)
 	if !markdownExists {
-		pretty.Println(filePath)
 		os.Create(filePath)
 	}
-	err = ioutil.WriteFile(filePath, []byte(s.Content), os.ModePerm)
+	err = ioutil.WriteFile(filePath, []byte(s.content), os.ModePerm)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -124,6 +128,31 @@ type recordData struct {
 	ResponseContentType string
 }
 
+func removeHeader(header http.Header, deleteItems []string) http.Header {
+	for _, v := range deleteItems {
+		header.Del(v)
+	}
+	return header
+}
+
+func maskHeader(header http.Header, maskItems map[string]string) http.Header {
+	for k, v := range maskItems {
+		if _, isFound := header[k]; isFound {
+			header.Set(k, v)
+		}
+	}
+	return header
+}
+
+func replaceHeader(header http.Header, maskItems map[string]string) http.Header {
+	for k, v := range maskItems {
+		if _, isFound := header[k]; isFound {
+			header.Set(k, v)
+		}
+	}
+	return header
+}
+
 func (s *Impl) manInTheMiddleHandler(apiURL string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Clone Request Body
@@ -135,39 +164,36 @@ func (s *Impl) manInTheMiddleHandler(apiURL string) func(w http.ResponseWriter, 
 		r.Body = ioutil.NopCloser(bytes.NewReader(reqBody))
 		url := fmt.Sprintf("%s%s", apiURL, r.RequestURI)
 		proxyReq, err := http.NewRequest(r.Method, url, bytes.NewReader(reqBody))
-
-		// We may want to filter some headers, otherwise we could just use a shallow copy
-		// proxyReq.Header = r.Header
-		proxyReq.Header = make(http.Header)
-		for h, val := range r.Header {
-			proxyReq.Header[h] = val
-		}
-		proxyReq.Header.Set("User-Agent", "Servirtium-Testing")
-
-		resp, err := http.DefaultClient.Do(proxyReq)
-		// Clone resp
-		respBody, err := ioutil.ReadAll(resp.Body)
+		// Modify request headers
+		proxyReq.Header = replaceHeader(r.Header, s.requestHeadersNeedReplace)
+		proxyReq.Header = removeHeader(proxyReq.Header, s.requestHeadersNeedDel)
+		response, err := http.DefaultClient.Do(proxyReq)
+		// Clone response
+		respBody, err := ioutil.ReadAll(response.Body)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		newRespHeader := resp.Header
-		newRespHeader.Del("Set-Cookie")
-		newRespHeader.Del("Date")
-		resp.Body = ioutil.NopCloser(bytes.NewBuffer(respBody))
+		// Modify Request Header before write
+		newReqHeader := maskHeader(proxyReq.Header, s.requestHeadersNeedMask)
+		// Modify Response Header before write
+		newRespHeader := removeHeader(response.Header, s.responseHeadersNeedDel)
+		newRespHeader = maskHeader(newRespHeader, s.responseHeadersNeedMask)
+
+		response.Body = ioutil.NopCloser(bytes.NewBuffer(respBody))
 		s.record(recordData{
 			RequestURLPath:      r.URL.Path,
 			RequestMethod:       r.Method,
-			RequestHeader:       r.Header,
+			RequestHeader:       newReqHeader,
 			RequestBody:         string(reqBody),
 			ResponseHeader:      newRespHeader,
 			ResponseBody:        string(respBody),
-			ResponseContentType: resp.Header.Get("Content-Type"),
-			ResponseStatus:      resp.Status,
+			ResponseContentType: response.Header.Get("Content-Type"),
+			ResponseStatus:      response.Status,
 		})
 
 		defer func() {
-			_ = resp.Body.Close()
+			_ = response.Body.Close()
 		}()
 		w.Write(respBody)
 	}
@@ -184,7 +210,7 @@ func (s *Impl) checkMarkdownExists(path string) bool {
 }
 
 func (s *Impl) appendContentInFile(currentContent, newContent string) string {
-	if s.RequestSequence == 0 {
+	if s.requestSequence == 0 {
 		return newContent
 	}
 	finalContent := fmt.Sprintf("%s\n%s", currentContent, newContent)
@@ -205,7 +231,7 @@ func (s *Impl) record(params recordData) {
 		log.Fatal(err)
 	}
 	data := recordData{
-		RecordSequence:      s.RequestSequence,
+		RecordSequence:      s.requestSequence,
 		RequestMethod:       params.RequestMethod,
 		RequestURLPath:      params.RequestURLPath,
 		RequestHeader:       params.RequestHeader,
@@ -218,9 +244,9 @@ func (s *Impl) record(params recordData) {
 	buffer := new(bytes.Buffer)
 	tmpl.Execute(buffer, data)
 	newContent := buffer.Bytes()
-	finalContent := s.appendContentInFile(s.Content, string(newContent))
-	s.Content = finalContent
-	s.RequestSequence = s.RequestSequence + 1
+	finalContent := s.appendContentInFile(s.content, string(newContent))
+	s.content = finalContent
+	s.requestSequence = s.requestSequence + 1
 }
 
 // CheckMarkdownIsDifferentToPreviousRecording ...
@@ -231,8 +257,38 @@ func (s *Impl) CheckMarkdownIsDifferentToPreviousRecording(recordFileName string
 	}
 	filePath := fmt.Sprintf("%s/mock/%s.md", workingPath, recordFileName)
 	fileContent, err := ioutil.ReadFile(filePath)
-	if err != nil {
-		log.Fatal(err)
+	isCanReadFile := err == nil
+	if !isCanReadFile {
+		return true
 	}
-	return s.Content == string(fileContent)
+	return s.content == string(fileContent)
+}
+
+// DelRespHeaders ...
+func (s *Impl) DelRespHeaders(headers []string) {
+	for _, v := range headers {
+		s.responseHeadersNeedDel = append(s.responseHeadersNeedDel, v)
+	}
+}
+
+// DelRequestHeaders ...
+func (s *Impl) DelRequestHeaders(headers []string) {
+	for _, v := range headers {
+		s.requestHeadersNeedDel = append(s.requestHeadersNeedDel, v)
+	}
+}
+
+// MaskRequestHeaders ...
+func (s *Impl) MaskRequestHeaders(headers map[string]string) {
+	s.requestHeadersNeedMask = headers
+}
+
+// MaskResponseHeaders ...
+func (s *Impl) MaskResponseHeaders(headers map[string]string) {
+	s.responseHeadersNeedMask = headers
+}
+
+// ReplaceRequestHeaders ...
+func (s *Impl) ReplaceRequestHeaders(headers map[string]string) {
+	s.requestHeadersNeedReplace = headers
 }

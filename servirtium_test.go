@@ -72,13 +72,13 @@ func (s *ServirtiumTestSuite) TestCheckMarkdownExist_False() {
 }
 
 func (s *ServirtiumTestSuite) TestAppendContentInFile_WhenSequenceZero() {
-	s.servirtium.RequestSequence = 0
+	s.servirtium.requestSequence = 0
 	result := s.servirtium.appendContentInFile("currentContent", "newContent")
 	s.Equal(result, "newContent")
 }
 
 func (s *ServirtiumTestSuite) TestAppendContentInFile_WhenSequenceOne() {
-	s.servirtium.RequestSequence = 1
+	s.servirtium.requestSequence = 1
 	result := s.servirtium.appendContentInFile("currentContent", "newContent")
 	s.Equal("currentContent\nnewContent", result)
 }
@@ -94,7 +94,7 @@ func (s *ServirtiumTestSuite) TestRecord() {
 		ResponseHeader:      nil,
 		ResponseStatus:      "200",
 	}
-	s.servirtium.RequestSequence = 0
+	s.servirtium.requestSequence = 0
 	s.servirtium.record(params)
-	s.NotNil(s.servirtium.Content)
+	s.NotNil(s.servirtium.content)
 }
