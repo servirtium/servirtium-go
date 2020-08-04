@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"regexp"
 	"text/template"
 
 	"github.com/gorilla/mux"
@@ -20,20 +21,23 @@ type Impl struct {
 	ServerRecord              *httptest.Server
 	requestSequence           int64
 	content                   string
-	requestHeadersNeedDel     []string
-	requestHeadersNeedMask    map[string]string
+	requestHeadersNeedDelete  []string
 	requestHeadersNeedReplace map[string]string
-	responseHeadersNeedDel    []string
+	requestHeadersNeedMask    map[string]string
+	requestBodyNeedMask       map[*regexp.Regexp]string
+	responseHeadersNeedDelete []string
+	responseHeaderNeedReplace map[string]string
 	responseHeadersNeedMask   map[string]string
+	responseBodyNeedMask      map[*regexp.Regexp]string
 }
 
 // NewServirtium ...
 func NewServirtium() *Impl {
 	return &Impl{
-		requestSequence:        0,
-		content:                "",
-		requestHeadersNeedDel:  []string{},
-		responseHeadersNeedDel: []string{},
+		requestSequence:           0,
+		content:                   "",
+		requestHeadersNeedDelete:  []string{},
+		responseHeadersNeedDelete: []string{},
 	}
 }
 
@@ -135,8 +139,8 @@ func removeHeader(header http.Header, deleteItems []string) http.Header {
 	return header
 }
 
-func maskHeader(header http.Header, maskItems map[string]string) http.Header {
-	for k, v := range maskItems {
+func replaceHeader(header http.Header, replaceItems map[string]string) http.Header {
+	for k, v := range replaceItems {
 		if _, isFound := header[k]; isFound {
 			header.Set(k, v)
 		}
@@ -144,58 +148,60 @@ func maskHeader(header http.Header, maskItems map[string]string) http.Header {
 	return header
 }
 
-func replaceHeader(header http.Header, maskItems map[string]string) http.Header {
+func maskBody(content string, maskItems map[*regexp.Regexp]string) string {
+	newContent := content
 	for k, v := range maskItems {
-		if _, isFound := header[k]; isFound {
-			header.Set(k, v)
-		}
+		newContent = k.ReplaceAllString(content, v)
 	}
-	return header
+	return newContent
 }
 
 func (s *Impl) manInTheMiddleHandler(apiURL string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Clone Request Body
-		reqBody, err := ioutil.ReadAll(r.Body)
+		requestBody, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		r.Body = ioutil.NopCloser(bytes.NewReader(reqBody))
+		r.Body = ioutil.NopCloser(bytes.NewReader(requestBody))
 		url := fmt.Sprintf("%s%s", apiURL, r.RequestURI)
-		proxyReq, err := http.NewRequest(r.Method, url, bytes.NewReader(reqBody))
+		proxyRequest, err := http.NewRequest(r.Method, url, bytes.NewReader(requestBody))
 		// Modify request headers
-		proxyReq.Header = replaceHeader(r.Header, s.requestHeadersNeedReplace)
-		proxyReq.Header = removeHeader(proxyReq.Header, s.requestHeadersNeedDel)
-		response, err := http.DefaultClient.Do(proxyReq)
+		proxyRequest.Header = replaceHeader(r.Header, s.requestHeadersNeedReplace)
+		proxyRequest.Header = removeHeader(proxyRequest.Header, s.requestHeadersNeedDelete)
+		response, err := http.DefaultClient.Do(proxyRequest)
 		// Clone response
-		respBody, err := ioutil.ReadAll(response.Body)
+		responseBody, err := ioutil.ReadAll(response.Body)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 		// Modify Request Header before write
-		newReqHeader := maskHeader(proxyReq.Header, s.requestHeadersNeedMask)
-		// Modify Response Header before write
-		newRespHeader := removeHeader(response.Header, s.responseHeadersNeedDel)
-		newRespHeader = maskHeader(newRespHeader, s.responseHeadersNeedMask)
+		newRequestHeader := replaceHeader(proxyRequest.Header, s.requestHeadersNeedMask)
+		maskedRequestBody := maskBody(string(requestBody), s.requestBodyNeedMask)
 
-		response.Body = ioutil.NopCloser(bytes.NewBuffer(respBody))
+		// Modify Response Header before write
+		newResponseHeader := replaceHeader(response.Header, s.responseHeaderNeedReplace)
+		removedResponseHeader := removeHeader(newResponseHeader, s.responseHeadersNeedDelete)
+		maskedResponseHeader := replaceHeader(removedResponseHeader, s.responseHeadersNeedMask)
+		maskedResponseBody := maskBody(string(responseBody), s.responseBodyNeedMask)
+
 		s.record(recordData{
 			RequestURLPath:      r.URL.Path,
 			RequestMethod:       r.Method,
-			RequestHeader:       newReqHeader,
-			RequestBody:         string(reqBody),
-			ResponseHeader:      newRespHeader,
-			ResponseBody:        string(respBody),
+			RequestHeader:       newRequestHeader,
+			RequestBody:         maskedRequestBody,
+			ResponseHeader:      maskedResponseHeader,
+			ResponseBody:        maskedResponseBody,
 			ResponseContentType: response.Header.Get("Content-Type"),
 			ResponseStatus:      response.Status,
 		})
-
+		response.Body = ioutil.NopCloser(bytes.NewBuffer(responseBody))
 		defer func() {
 			_ = response.Body.Close()
 		}()
-		w.Write(respBody)
+		w.Write(responseBody)
 	}
 }
 
@@ -261,20 +267,16 @@ func (s *Impl) CheckMarkdownIsDifferentToPreviousRecording(recordFileName string
 	if !isCanReadFile {
 		return true
 	}
-	return s.content == string(fileContent)
+	newContent := maskBody(s.content, s.requestBodyNeedMask)
+	newContent = maskBody(newContent, s.requestBodyNeedMask)
+
+	return newContent == string(fileContent)
 }
 
-// DelRespHeaders ...
-func (s *Impl) DelRespHeaders(headers []string) {
+// DeleteRequestHeaders ...
+func (s *Impl) DeleteRequestHeaders(headers []string) {
 	for _, v := range headers {
-		s.responseHeadersNeedDel = append(s.responseHeadersNeedDel, v)
-	}
-}
-
-// DelRequestHeaders ...
-func (s *Impl) DelRequestHeaders(headers []string) {
-	for _, v := range headers {
-		s.requestHeadersNeedDel = append(s.requestHeadersNeedDel, v)
+		s.requestHeadersNeedDelete = append(s.requestHeadersNeedDelete, v)
 	}
 }
 
@@ -283,12 +285,34 @@ func (s *Impl) MaskRequestHeaders(headers map[string]string) {
 	s.requestHeadersNeedMask = headers
 }
 
+// ReplaceRequestHeaders ...
+func (s *Impl) ReplaceRequestHeaders(headers map[string]string) {
+	s.requestHeadersNeedReplace = headers
+}
+
+// MaskRequestBody ...
+func (s *Impl) MaskRequestBody(replaceRegex map[*regexp.Regexp]string) {
+	s.requestBodyNeedMask = replaceRegex
+}
+
+// DeleteResponseHeaders ...
+func (s *Impl) DeleteResponseHeaders(headers []string) {
+	for _, v := range headers {
+		s.responseHeadersNeedDelete = append(s.responseHeadersNeedDelete, v)
+	}
+}
+
 // MaskResponseHeaders ...
 func (s *Impl) MaskResponseHeaders(headers map[string]string) {
 	s.responseHeadersNeedMask = headers
 }
 
-// ReplaceRequestHeaders ...
-func (s *Impl) ReplaceRequestHeaders(headers map[string]string) {
-	s.requestHeadersNeedReplace = headers
+// ReplaceResponseHeaders ...
+func (s *Impl) ReplaceResponseHeaders(headers map[string]string) {
+	s.responseHeaderNeedReplace = headers
+}
+
+// MaskResponseBody ...
+func (s *Impl) MaskResponseBody(replaceRegex map[*regexp.Regexp]string) {
+	s.responseBodyNeedMask = replaceRegex
 }
