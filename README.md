@@ -7,6 +7,16 @@ Servirtium is a server that serves as a man-in-the-middle: it processes incoming
 # Prerequisites
 The library is written in the Go programming language, so to use or compile the library you need Go Compiler. You can download it on the official site.
 
+You can get the servirtium-go package by
+```
+# use Git tags
+go get https://github.com/servirtium/servirtium-go@v4.0.1
+# or Git branch name
+go get https://github.com/servirtium/servirtium-go@master
+# or Git commit hash
+go get https://github.com/servirtium/servirtium-go@08c92af
+```
+
 # Usage
 You can use one of these attribute on test function to start the Servirtium server and config it to serve request in records and playback mode
 
