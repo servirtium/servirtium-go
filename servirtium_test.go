@@ -3,7 +3,9 @@ package servirtium
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
+	"regexp"
 	"testing"
 
 	"github.com/stretchr/testify/suite"
@@ -72,13 +74,13 @@ func (s *ServirtiumTestSuite) TestCheckMarkdownExist_False() {
 }
 
 func (s *ServirtiumTestSuite) TestAppendContentInFile_WhenSequenceZero() {
-	s.servirtium.RequestSequence = 0
+	s.servirtium.requestSequence = 0
 	result := s.servirtium.appendContentInFile("currentContent", "newContent")
 	s.Equal(result, "newContent")
 }
 
 func (s *ServirtiumTestSuite) TestAppendContentInFile_WhenSequenceOne() {
-	s.servirtium.RequestSequence = 1
+	s.servirtium.requestSequence = 1
 	result := s.servirtium.appendContentInFile("currentContent", "newContent")
 	s.Equal("currentContent\nnewContent", result)
 }
@@ -94,7 +96,80 @@ func (s *ServirtiumTestSuite) TestRecord() {
 		ResponseHeader:      nil,
 		ResponseStatus:      "200",
 	}
-	s.servirtium.RequestSequence = 0
+	s.servirtium.requestSequence = 0
 	s.servirtium.record(params)
-	s.NotNil(s.servirtium.Content)
+	s.NotNil(s.servirtium.content)
+}
+
+func (s *ServirtiumTestSuite) TestMaskBody() {
+	inputContent := "<password>your password</password>"
+	passwordRegex := regexp.MustCompile(`(<password>.{0,}<\/password>)`)
+	result := maskBody(inputContent, map[*regexp.Regexp]string{passwordRegex: "<password>MASKED</password>"})
+	s.Equal("<password>MASKED</password>", result)
+}
+
+func (s *ServirtiumTestSuite) TestRemoveHeader() {
+	mockHeader := http.Header{"User-Agent": []string{"123"}, "Authorization": []string{"mockAuthorization"}}
+	expected := http.Header{"User-Agent": []string{"123"}}
+	result := removeHeader(mockHeader, []string{"Authorization"})
+	s.Equal(expected, result)
+}
+
+func (s *ServirtiumTestSuite) TestMaskHeader() {
+	mockHeader := http.Header{"User-Agent": []string{"123"}, "Authorization": []string{"mockAuthorization"}}
+	expected := http.Header{"User-Agent": []string{"123"}, "Authorization": []string{"MASKED"}}
+	result := replaceHeader(mockHeader, map[string]string{"Authorization": "MASKED"})
+	s.Equal(expected, result)
+}
+
+func (s *ServirtiumTestSuite) TestDeleteRequestHeaders() {
+	s.servirtium.DeleteRequestHeaders([]string{"Authorization"})
+	expected := []string{"Authorization"}
+	s.Equal(expected, s.servirtium.requestHeadersNeedDelete)
+}
+
+func (s *ServirtiumTestSuite) TestMaskRequestHeaders() {
+	s.servirtium.MaskRequestHeaders(map[string]string{"Authorization": "123"})
+	expected := map[string]string{"Authorization": "123"}
+	s.Equal(expected, s.servirtium.requestHeadersNeedMask)
+}
+
+func (s *ServirtiumTestSuite) TestReplaceRequestHeaders() {
+	s.servirtium.ReplaceRequestHeaders(map[string]string{"Authorization": "123"})
+	expected := map[string]string{"Authorization": "123"}
+	s.Equal(expected, s.servirtium.requestHeadersNeedReplace)
+}
+
+func (s *ServirtiumTestSuite) TestMaskRequestBody() {
+	inputContent := "<password>your password</password>"
+	passwordRegex := regexp.MustCompile(`(<password>.{0,}<\/password>)`)
+	expected := map[*regexp.Regexp]string{passwordRegex: inputContent}
+	s.servirtium.MaskRequestBody(map[*regexp.Regexp]string{passwordRegex: inputContent})
+	s.Equal(expected, s.servirtium.requestBodyNeedMask)
+}
+
+func (s *ServirtiumTestSuite) TestDeleteResponseHeaders() {
+	s.servirtium.DeleteResponseHeaders([]string{"Authorization"})
+	expected := []string{"Authorization"}
+	s.Equal(expected, s.servirtium.responseHeadersNeedDelete)
+}
+
+func (s *ServirtiumTestSuite) TestMaskResponseHeaders() {
+	s.servirtium.MaskResponseHeaders(map[string]string{"Authorization": "123"})
+	expected := map[string]string{"Authorization": "123"}
+	s.Equal(expected, s.servirtium.responseHeadersNeedMask)
+}
+
+func (s *ServirtiumTestSuite) TestReplaceResponseHeaders() {
+	s.servirtium.ReplaceResponseHeaders(map[string]string{"Authorization": "123"})
+	expected := map[string]string{"Authorization": "123"}
+	s.Equal(expected, s.servirtium.responseHeaderNeedReplace)
+}
+
+func (s *ServirtiumTestSuite) TestMaskResponseBody() {
+	inputContent := "<password>your password</password>"
+	passwordRegex := regexp.MustCompile(`(<password>.{0,}<\/password>)`)
+	expected := map[*regexp.Regexp]string{passwordRegex: inputContent}
+	s.servirtium.MaskResponseBody(map[*regexp.Regexp]string{passwordRegex: inputContent})
+	s.Equal(expected, s.servirtium.responseBodyNeedMask)
 }
