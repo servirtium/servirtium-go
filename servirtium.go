@@ -10,6 +10,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"regexp"
+	"strings"
 	"text/template"
 
 	"github.com/gorilla/mux"
@@ -58,6 +59,48 @@ func (s *Impl) initServerPlayback(recordFileName string) {
 	s.ServerPlayback = srv
 }
 
+func (s *Impl) getInteraction(data string) string {
+	interactions := strings.Split(fmt.Sprintf("\n%s", data), "\n## Interaction ")
+	return interactions[s.requestSequence+1]
+}
+
+func (s *Impl) parseHeaders(content string) map[string]string {
+	var (
+		headers map[string]string
+	)
+	headersContents := strings.Split(content, "\n")
+	for _, v := range headersContents {
+		keysAndValues := strings.Split(v, ": ")
+		keyIndex := 0
+		valueIndex := 1
+		isValidHeaders := keysAndValues[keyIndex] != ""
+		if isValidHeaders {
+			headers[keysAndValues[keyIndex]] = keysAndValues[valueIndex]
+		}
+	}
+	return headers
+}
+
+func (s *Impl) getPlaybackResponse(data string) (string, map[string]string) {
+	var (
+		headers      map[string]string
+		responseBody string
+		sections     = strings.Split(data, "\n### ")
+	)
+	for _, v := range sections {
+		if strings.HasPrefix(v, "Response headers recorded for playback") {
+			headerContent := strings.Split(v, "```")[1]
+			headers = s.parseHeaders(headerContent)
+		}
+		if strings.HasPrefix(v, "Response body recorded for playback") {
+			body := strings.Split(v, "```")[1]
+			responseBody = v[:len(body)-1]
+			headers["content-length"] = fmt.Sprintf("%s", responseBody)
+		}
+	}
+	return responseBody, headers
+}
+
 func (s *Impl) anualAvgHandlerPlayback(recordFileName string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		workingPath, err := os.Getwd()
@@ -65,13 +108,18 @@ func (s *Impl) anualAvgHandlerPlayback(recordFileName string) func(w http.Respon
 			log.Fatal(err)
 		}
 		data, err := ioutil.ReadFile(fmt.Sprintf("%s/mock/%s.md", workingPath, recordFileName))
+		interaction := s.getInteraction(string(data))
+		body, headers := s.getPlaybackResponse(interaction)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			_, _ = w.Write([]byte("Internal Server Error"))
 			return
 		}
+		for k, v := range headers {
+			w.Header().Set(k, v)
+		}
 		w.WriteHeader(http.StatusOK)
-		_, _ = w.Write(data)
+		_, _ = w.Write([]byte(body))
 		return
 	}
 }
