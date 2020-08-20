@@ -16,10 +16,10 @@ p = None
 if len(sys.argv) > 1:
    if sys.argv[1] == "record":
        url = "http://localhost:61417"
-       p = Popen(["go", "run", "todobackend_compatibility.go", "record"])
+       p = Popen(["go", "run", "./cmd/todobackend_compatibility.go", "record"])
    elif sys.argv[1] == "playback":
        url = "http://localhost:61417"
-       p = Popen(["go", "run", "todobackend_compatibility.go", "playback"])
+       p = Popen(["go", "run", "./cmd/todobackend_compatibility.go", "playback"])
    elif sys.argv[1] == "direct":
        print("showing reference Sinatra app online without Servirtium in the middle")
        url = "https://todo-backend-sinatra.herokuapp.com"
