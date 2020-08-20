@@ -66,14 +66,16 @@ func (s *Impl) getInteraction(data string) string {
 
 func (s *Impl) parseHeaders(content string) map[string]string {
 	var (
-		headers map[string]string
+		headers = map[string]string{}
 	)
-	headersContents := strings.Split(content, "\n")
+	newLineReplaceByCommaContent := strings.ReplaceAll(content, "\n", ",")
+	headersContents := strings.Split(newLineReplaceByCommaContent, ",")
 	for _, v := range headersContents {
-		keysAndValues := strings.Split(v, ": ")
+		replaceByComma := strings.ReplaceAll(v, ": ", ",")
+		keysAndValues := strings.Split(replaceByComma, ": ")
 		keyIndex := 0
 		valueIndex := 1
-		isValidHeaders := keysAndValues[keyIndex] != ""
+		isValidHeaders := len(keysAndValues) > 1
 		if isValidHeaders {
 			headers[keysAndValues[keyIndex]] = keysAndValues[valueIndex]
 		}
@@ -93,9 +95,8 @@ func (s *Impl) getPlaybackResponse(data string) (string, map[string]string) {
 			headers = s.parseHeaders(headerContent)
 		}
 		if strings.HasPrefix(v, "Response body recorded for playback") {
-			body := strings.Split(v, "```")[1]
-			responseBody = v[:len(body)-1]
-			headers["content-length"] = fmt.Sprintf("%s", responseBody)
+			responseBody = strings.Split(v, "```")[1]
+			headers["content-length"] = fmt.Sprintf("%d", len(responseBody))
 		}
 	}
 	return responseBody, headers
