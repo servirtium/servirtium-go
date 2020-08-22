@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"strconv"
 	"strings"
 	"text/template"
 	"time"
@@ -71,11 +72,15 @@ func (s *Impl) EndPlayback() {
 }
 
 func (s *Impl) initServerPlayback(recordFileName string) {
+	s.initServerPlaybackOnPort(recordFileName, 61417)
+}
+
+func (s *Impl) initServerPlaybackOnPort(recordFileName string, port int) {
 	r := mux.NewRouter()
 	r.PathPrefix("/").HandlerFunc(s.anualAvgHandlerPlayback(recordFileName))
 	srv := &http.Server{
 		Handler: disableCors(r),
-		Addr:    "127.0.0.1:61417",
+		Addr:    "127.0.0.1:" + strconv.Itoa(port),
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
@@ -178,11 +183,15 @@ func (s *Impl) EndRecord() {
 }
 
 func (s *Impl) initRecordServer(apiURL string) {
+	s.initRecordServerOnPort(apiURL, 61417)
+}
+
+func (s *Impl) initRecordServerOnPort(apiURL string, port int) {
 	r := mux.NewRouter()
 	r.PathPrefix("/").HandlerFunc(s.manInTheMiddleHandler(apiURL))
 	srv := &http.Server{
 		Handler: disableCors(r),
-		Addr:    "127.0.0.1:61417",
+		Addr:    "127.0.0.1:" + strconv.Itoa(port),
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
