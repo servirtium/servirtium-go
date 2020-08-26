@@ -8,18 +8,14 @@ import (
 	"net/http"
 	"os"
 	"regexp"
-	"strconv"
 	"strings"
 	"text/template"
-	"time"
-
-	"github.com/gorilla/mux"
 )
 
 // Impl ...
 type Impl struct {
-	ServerPlayback            *http.Server
-	ServerRecord              *http.Server
+	ServerPlayback            IServerPlayback
+	ServerRecord              IServerRecord
 	requestSequence           int64
 	content                   string
 	requestHeadersNeedDelete  []string
@@ -42,50 +38,14 @@ func NewServirtium() *Impl {
 	}
 }
 
-func disableCors(h http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, DELETE, PATCH, PUT")
-		w.Header().Set("Access-Control-Allow-Headers", "Accept, Authorization, Content-Type, Content-Length, Accept-Encoding")
-
-		// I added this for another handler of mine,
-		// but I do not think this is necessary for GraphQL's handler
-		if r.Method == "OPTIONS" {
-			w.Header().Set("Access-Control-Max-Age", "86400")
-			w.WriteHeader(http.StatusOK)
-			return
-		}
-
-		h.ServeHTTP(w, r)
-	})
-}
-
 // StartPlayback ...
-func (s *Impl) StartPlayback(recordFileName string) {
-	s.initServerPlayback(recordFileName)
-	log.Fatal(s.ServerPlayback.ListenAndServe())
+func (s *Impl) StartPlayback() {
+	s.ServerPlayback.Start()
 }
 
 // EndPlayback ...
 func (s *Impl) EndPlayback() {
 	s.ServerPlayback.Close()
-}
-
-func (s *Impl) initServerPlayback(recordFileName string) {
-	s.initServerPlaybackOnPort(recordFileName, 61417)
-}
-
-func (s *Impl) initServerPlaybackOnPort(recordFileName string, port int) {
-	r := mux.NewRouter()
-	r.PathPrefix("/").HandlerFunc(s.anualAvgHandlerPlayback(recordFileName))
-	srv := &http.Server{
-		Handler: disableCors(r),
-		Addr:    "127.0.0.1:" + strconv.Itoa(port),
-		// Good practice: enforce timeouts for servers you create!
-		WriteTimeout: 15 * time.Second,
-		ReadTimeout:  15 * time.Second,
-	}
-	s.ServerPlayback = srv
 }
 
 func (s *Impl) getInteraction(data string) string {
@@ -131,7 +91,8 @@ func (s *Impl) getPlaybackResponse(data string) (string, map[string]string) {
 	return responseBody, headers
 }
 
-func (s *Impl) anualAvgHandlerPlayback(recordFileName string) func(w http.ResponseWriter, r *http.Request) {
+// AnualAvgHandlerPlayback ...
+func (s *Impl) AnualAvgHandlerPlayback(recordFileName string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		workingPath, err := os.Getwd()
 		if err != nil {
@@ -155,9 +116,8 @@ func (s *Impl) anualAvgHandlerPlayback(recordFileName string) func(w http.Respon
 }
 
 // StartRecord ...
-func (s *Impl) StartRecord(apiURL string) {
-	s.initRecordServer(apiURL)
-	log.Fatal(s.ServerRecord.ListenAndServe())
+func (s *Impl) StartRecord() {
+	s.ServerRecord.Start()
 }
 
 // WriteRecord ...
@@ -180,23 +140,6 @@ func (s *Impl) WriteRecord(recordFileName string) {
 // EndRecord ...
 func (s *Impl) EndRecord() {
 	s.ServerRecord.Close()
-}
-
-func (s *Impl) initRecordServer(apiURL string) {
-	s.initRecordServerOnPort(apiURL, 61417)
-}
-
-func (s *Impl) initRecordServerOnPort(apiURL string, port int) {
-	r := mux.NewRouter()
-	r.PathPrefix("/").HandlerFunc(s.manInTheMiddleHandler(apiURL))
-	srv := &http.Server{
-		Handler: disableCors(r),
-		Addr:    "127.0.0.1:" + strconv.Itoa(port),
-		// Good practice: enforce timeouts for servers you create!
-		WriteTimeout: 15 * time.Second,
-		ReadTimeout:  15 * time.Second,
-	}
-	s.ServerRecord = srv
 }
 
 type recordData struct {
@@ -235,7 +178,8 @@ func maskBody(content string, maskItems map[*regexp.Regexp]string) string {
 	return newContent
 }
 
-func (s *Impl) manInTheMiddleHandler(apiURL string) func(w http.ResponseWriter, r *http.Request) {
+// ManInTheMiddleHandler ...
+func (s *Impl) ManInTheMiddleHandler(apiURL string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Clone Request Body
 		requestBody, err := ioutil.ReadAll(r.Body)

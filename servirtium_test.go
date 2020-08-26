@@ -26,36 +26,28 @@ func (s *ServirtiumTestSuite) SetupTest() {
 }
 
 func (s *ServirtiumTestSuite) TestStartPlayback() {
-	s.servirtium.StartPlayback("mockName")
-	s.NotNil(s.servirtium.ServerPlayback)
-	s.servirtium.EndPlayback()
-}
-
-func (s *ServirtiumTestSuite) TestInitServerPlayback() {
-	s.servirtium.initServerPlayback("mockName")
+	serverPlayback := NewServerPlaybackTest(s.servirtium.AnualAvgHandlerPlayback("mockName"))
+	s.servirtium.ServerPlayback = serverPlayback
+	s.servirtium.StartPlayback()
 	s.NotNil(s.servirtium.ServerPlayback)
 	s.servirtium.EndPlayback()
 }
 
 func (s *ServirtiumTestSuite) TestAnualAvgHandlerPlayback() {
-	result := s.servirtium.anualAvgHandlerPlayback("mockName")
+	result := s.servirtium.AnualAvgHandlerPlayback("mockName")
 	s.NotNil(result)
 }
 
 func (s *ServirtiumTestSuite) TestStartRecord() {
-	s.servirtium.StartRecord("https://google.com")
-	s.NotNil(s.servirtium.ServerRecord)
-	s.servirtium.EndRecord()
-}
-
-func (s *ServirtiumTestSuite) TestInitRecordServer() {
-	s.servirtium.initRecordServer("https://google.com")
+	serverRecord := NewServerRecordTest(s.servirtium.ManInTheMiddleHandler("https://google.com"))
+	s.servirtium.ServerRecord = serverRecord
+	s.servirtium.StartRecord()
 	s.NotNil(s.servirtium.ServerRecord)
 	s.servirtium.EndRecord()
 }
 
 func (s *ServirtiumTestSuite) TestManInTheMiddleHandler() {
-	result := s.servirtium.manInTheMiddleHandler("https://google.com")
+	result := s.servirtium.ManInTheMiddleHandler("https://google.com")
 	s.NotNil(result)
 }
 

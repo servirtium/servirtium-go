@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/servirtium/servirtium-go"
+	servirtiumPackage "github.com/servirtium/servirtium-go"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 	signal.Notify(sigc,
 		syscall.SIGTERM,
 	)
-	servirtium := servirtium.NewServirtium()
+	servirtium := servirtiumPackage.NewServirtium()
 	argsWithoutProg := os.Args[1:]
 	switch argsWithoutProg[0] {
 	case "record":
@@ -23,14 +23,18 @@ func main() {
 			servirtium.WriteRecord("todobackend_test_suite")
 			servirtium.EndRecord()
 		}()
-		servirtium.StartRecord("https://todo-backend-sinatra.herokuapp.com")
+		serverRecord := servirtiumPackage.NewServerRecord(servirtium.ManInTheMiddleHandler("https://todo-backend-sinatra.herokuapp.com"), 61417)
+		servirtium.ServerRecord = serverRecord
+		servirtium.StartRecord()
 		break
 	case "playback":
 		go func() {
 			<-sigc
 			servirtium.EndPlayback()
 		}()
-		servirtium.StartPlayback("todobackend_test_suite")
+		serverPlayback := servirtiumPackage.NewServerPlayback(servirtium.AnualAvgHandlerPlayback("todobackend_test_suite"), 61417)
+		servirtium.ServerPlayback = serverPlayback
+		servirtium.StartPlayback()
 		break
 	default:
 		log.Fatal("Oops, should have been record or playback")

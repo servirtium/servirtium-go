@@ -28,9 +28,9 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 ```
 Access-Control-Allow-Origin: *
 Connection: keep-alive
-Content-Length: 842
+Content-Length: 562
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:14 GMT
+Date: Wed, 26 Aug 2020 17:39:24 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -42,7 +42,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (200 OK:text/html;charset=utf-8):
 
 ```
-[{"uid":"47886b47-fe17-4a99-a097-3b7bbe4a1d60","title":"blah","order":523,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/47886b47-fe17-4a99-a097-3b7bbe4a1d60","url":"https://todo-backend-sinatra.herokuapp.com/todos/47886b47-fe17-4a99-a097-3b7bbe4a1d60"},{"uid":"809a59a3-a9aa-44bf-b5b3-f2778a010bbd","title":"blah","order":95,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/809a59a3-a9aa-44bf-b5b3-f2778a010bbd","url":"https://todo-backend-sinatra.herokuapp.com/todos/809a59a3-a9aa-44bf-b5b3-f2778a010bbd"},{"uid":"7a3597c0-13f1-4997-8da4-dbf0e8511daa","title":"blah","order":95,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/7a3597c0-13f1-4997-8da4-dbf0e8511daa","url":"https://todo-backend-sinatra.herokuapp.com/todos/7a3597c0-13f1-4997-8da4-dbf0e8511daa"}]
+[{"uid":"434c2fb2-639b-40bf-99c7-2be701f3296c","title":"blah","order":523,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/434c2fb2-639b-40bf-99c7-2be701f3296c","url":"https://todo-backend-sinatra.herokuapp.com/todos/434c2fb2-639b-40bf-99c7-2be701f3296c"},{"uid":"1a9d93bc-479b-4078-bc2f-622c412114c8","title":"blah","order":10,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/1a9d93bc-479b-4078-bc2f-622c412114c8","url":"https://todo-backend-sinatra.herokuapp.com/todos/1a9d93bc-479b-4078-bc2f-622c412114c8"}]
 ```
 
 ## Interaction 1: POST/todos
@@ -78,8 +78,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 270
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:14 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/24a1a77d-4b3c-4b59-adc9-0887181a4dbe
+Date: Wed, 26 Aug 2020 17:39:24 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/b7d00c22-54ca-4425-98ac-e33672eade0d
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -91,7 +91,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (201 Created:text/html;charset=utf-8):
 
 ```
-{"title":"a todo","uid":"24a1a77d-4b3c-4b59-adc9-0887181a4dbe","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/24a1a77d-4b3c-4b59-adc9-0887181a4dbe","url":"https://todo-backend-sinatra.herokuapp.com/todos/24a1a77d-4b3c-4b59-adc9-0887181a4dbe"}
+{"title":"a todo","uid":"b7d00c22-54ca-4425-98ac-e33672eade0d","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/b7d00c22-54ca-4425-98ac-e33672eade0d","url":"https://todo-backend-sinatra.herokuapp.com/todos/b7d00c22-54ca-4425-98ac-e33672eade0d"}
 ```
 
 ## Interaction 2: DELETE/todos
@@ -125,7 +125,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Thu, 20 Aug 2020 17:30:14 GMT
+Date: Wed, 26 Aug 2020 17:39:24 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -169,7 +169,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Thu, 20 Aug 2020 17:30:15 GMT
+Date: Wed, 26 Aug 2020 17:39:25 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -214,7 +214,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 2
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:15 GMT
+Date: Wed, 26 Aug 2020 17:39:25 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -260,7 +260,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Thu, 20 Aug 2020 17:30:15 GMT
+Date: Wed, 26 Aug 2020 17:39:25 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -306,8 +306,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 276
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:15 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/5a2cf1b7-5bb3-4e8e-9b8f-761854cef57f
+Date: Wed, 26 Aug 2020 17:39:26 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/b77bb73b-c21a-413e-b684-731f86903782
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -319,7 +319,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (201 Created:text/html;charset=utf-8):
 
 ```
-{"title":"walk the dog","uid":"5a2cf1b7-5bb3-4e8e-9b8f-761854cef57f","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/5a2cf1b7-5bb3-4e8e-9b8f-761854cef57f","url":"https://todo-backend-sinatra.herokuapp.com/todos/5a2cf1b7-5bb3-4e8e-9b8f-761854cef57f"}
+{"title":"walk the dog","uid":"b77bb73b-c21a-413e-b684-731f86903782","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/b77bb73b-c21a-413e-b684-731f86903782","url":"https://todo-backend-sinatra.herokuapp.com/todos/b77bb73b-c21a-413e-b684-731f86903782"}
 ```
 
 ## Interaction 7: GET/todos
@@ -354,7 +354,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 288
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:16 GMT
+Date: Wed, 26 Aug 2020 17:39:26 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -366,7 +366,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (200 OK:text/html;charset=utf-8):
 
 ```
-[{"uid":"5a2cf1b7-5bb3-4e8e-9b8f-761854cef57f","title":"walk the dog","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/5a2cf1b7-5bb3-4e8e-9b8f-761854cef57f","url":"https://todo-backend-sinatra.herokuapp.com/todos/5a2cf1b7-5bb3-4e8e-9b8f-761854cef57f"}]
+[{"uid":"b77bb73b-c21a-413e-b684-731f86903782","title":"walk the dog","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/b77bb73b-c21a-413e-b684-731f86903782","url":"https://todo-backend-sinatra.herokuapp.com/todos/b77bb73b-c21a-413e-b684-731f86903782"}]
 ```
 
 ## Interaction 8: DELETE/todos
@@ -400,7 +400,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Thu, 20 Aug 2020 17:30:16 GMT
+Date: Wed, 26 Aug 2020 17:39:26 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -446,8 +446,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 268
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:16 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/f792a371-501b-4160-8705-fff93f5dd3ba
+Date: Wed, 26 Aug 2020 17:39:26 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/e843a487-cff4-4599-9cb1-13cbcc579a9f
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -459,7 +459,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (201 Created:text/html;charset=utf-8):
 
 ```
-{"title":"blah","uid":"f792a371-501b-4160-8705-fff93f5dd3ba","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/f792a371-501b-4160-8705-fff93f5dd3ba","url":"https://todo-backend-sinatra.herokuapp.com/todos/f792a371-501b-4160-8705-fff93f5dd3ba"}
+{"title":"blah","uid":"e843a487-cff4-4599-9cb1-13cbcc579a9f","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/e843a487-cff4-4599-9cb1-13cbcc579a9f","url":"https://todo-backend-sinatra.herokuapp.com/todos/e843a487-cff4-4599-9cb1-13cbcc579a9f"}
 ```
 
 ## Interaction 10: GET/todos
@@ -494,7 +494,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 280
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:17 GMT
+Date: Wed, 26 Aug 2020 17:39:27 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -506,7 +506,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (200 OK:text/html;charset=utf-8):
 
 ```
-[{"uid":"f792a371-501b-4160-8705-fff93f5dd3ba","title":"blah","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/f792a371-501b-4160-8705-fff93f5dd3ba","url":"https://todo-backend-sinatra.herokuapp.com/todos/f792a371-501b-4160-8705-fff93f5dd3ba"}]
+[{"uid":"e843a487-cff4-4599-9cb1-13cbcc579a9f","title":"blah","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/e843a487-cff4-4599-9cb1-13cbcc579a9f","url":"https://todo-backend-sinatra.herokuapp.com/todos/e843a487-cff4-4599-9cb1-13cbcc579a9f"}]
 ```
 
 ## Interaction 11: DELETE/todos
@@ -540,7 +540,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Thu, 20 Aug 2020 17:30:17 GMT
+Date: Wed, 26 Aug 2020 17:39:27 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -586,8 +586,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 268
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:17 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/04a59516-3486-4e5f-92dc-f9a07de3b346
+Date: Wed, 26 Aug 2020 17:39:27 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/293e4926-10c3-4924-b4b2-54c728f5fb5a
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -599,7 +599,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (201 Created:text/html;charset=utf-8):
 
 ```
-{"title":"blah","uid":"04a59516-3486-4e5f-92dc-f9a07de3b346","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/04a59516-3486-4e5f-92dc-f9a07de3b346","url":"https://todo-backend-sinatra.herokuapp.com/todos/04a59516-3486-4e5f-92dc-f9a07de3b346"}
+{"title":"blah","uid":"293e4926-10c3-4924-b4b2-54c728f5fb5a","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/293e4926-10c3-4924-b4b2-54c728f5fb5a","url":"https://todo-backend-sinatra.herokuapp.com/todos/293e4926-10c3-4924-b4b2-54c728f5fb5a"}
 ```
 
 ## Interaction 13: GET/todos
@@ -634,7 +634,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 280
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:17 GMT
+Date: Wed, 26 Aug 2020 17:39:28 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -646,7 +646,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (200 OK:text/html;charset=utf-8):
 
 ```
-[{"uid":"04a59516-3486-4e5f-92dc-f9a07de3b346","title":"blah","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/04a59516-3486-4e5f-92dc-f9a07de3b346","url":"https://todo-backend-sinatra.herokuapp.com/todos/04a59516-3486-4e5f-92dc-f9a07de3b346"}]
+[{"uid":"293e4926-10c3-4924-b4b2-54c728f5fb5a","title":"blah","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/293e4926-10c3-4924-b4b2-54c728f5fb5a","url":"https://todo-backend-sinatra.herokuapp.com/todos/293e4926-10c3-4924-b4b2-54c728f5fb5a"}]
 ```
 
 ## Interaction 14: DELETE/todos
@@ -680,7 +680,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Thu, 20 Aug 2020 17:30:18 GMT
+Date: Wed, 26 Aug 2020 17:39:28 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -726,8 +726,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 271
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:18 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/b3dce1fb-127b-4b53-ba83-41bd5905408f
+Date: Wed, 26 Aug 2020 17:39:28 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/833fb42e-938b-4ba8-8e94-4f273c59b3fa
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -739,7 +739,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (201 Created:text/html;charset=utf-8):
 
 ```
-{"title":"my todo","uid":"b3dce1fb-127b-4b53-ba83-41bd5905408f","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/b3dce1fb-127b-4b53-ba83-41bd5905408f","url":"https://todo-backend-sinatra.herokuapp.com/todos/b3dce1fb-127b-4b53-ba83-41bd5905408f"}
+{"title":"my todo","uid":"833fb42e-938b-4ba8-8e94-4f273c59b3fa","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/833fb42e-938b-4ba8-8e94-4f273c59b3fa","url":"https://todo-backend-sinatra.herokuapp.com/todos/833fb42e-938b-4ba8-8e94-4f273c59b3fa"}
 ```
 
 ## Interaction 16: DELETE/todos
@@ -773,7 +773,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Thu, 20 Aug 2020 17:30:20 GMT
+Date: Wed, 26 Aug 2020 17:39:30 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -819,8 +819,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 278
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:20 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/b9ec18d0-f23b-4843-ab6a-b470f64c0d49
+Date: Wed, 26 Aug 2020 17:39:30 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/8f2a2f48-9f92-4625-855a-f8e72019e5a3
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -832,7 +832,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (201 Created:text/html;charset=utf-8):
 
 ```
-{"title":"todo the first","uid":"b9ec18d0-f23b-4843-ab6a-b470f64c0d49","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/b9ec18d0-f23b-4843-ab6a-b470f64c0d49","url":"https://todo-backend-sinatra.herokuapp.com/todos/b9ec18d0-f23b-4843-ab6a-b470f64c0d49"}
+{"title":"todo the first","uid":"8f2a2f48-9f92-4625-855a-f8e72019e5a3","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/8f2a2f48-9f92-4625-855a-f8e72019e5a3","url":"https://todo-backend-sinatra.herokuapp.com/todos/8f2a2f48-9f92-4625-855a-f8e72019e5a3"}
 ```
 
 ## Interaction 18: POST/todos
@@ -868,8 +868,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 279
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:20 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/1e926ef2-3764-4218-b223-a84bb2945c34
+Date: Wed, 26 Aug 2020 17:39:31 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/0d655306-795b-41d8-951d-546489a2b039
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -881,7 +881,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (201 Created:text/html;charset=utf-8):
 
 ```
-{"title":"todo the second","uid":"1e926ef2-3764-4218-b223-a84bb2945c34","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/1e926ef2-3764-4218-b223-a84bb2945c34","url":"https://todo-backend-sinatra.herokuapp.com/todos/1e926ef2-3764-4218-b223-a84bb2945c34"}
+{"title":"todo the second","uid":"0d655306-795b-41d8-951d-546489a2b039","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/0d655306-795b-41d8-951d-546489a2b039","url":"https://todo-backend-sinatra.herokuapp.com/todos/0d655306-795b-41d8-951d-546489a2b039"}
 ```
 
 ## Interaction 19: GET/todos
@@ -916,7 +916,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 580
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:20 GMT
+Date: Wed, 26 Aug 2020 17:39:31 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -928,7 +928,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (200 OK:text/html;charset=utf-8):
 
 ```
-[{"uid":"b9ec18d0-f23b-4843-ab6a-b470f64c0d49","title":"todo the first","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/b9ec18d0-f23b-4843-ab6a-b470f64c0d49","url":"https://todo-backend-sinatra.herokuapp.com/todos/b9ec18d0-f23b-4843-ab6a-b470f64c0d49"},{"uid":"1e926ef2-3764-4218-b223-a84bb2945c34","title":"todo the second","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/1e926ef2-3764-4218-b223-a84bb2945c34","url":"https://todo-backend-sinatra.herokuapp.com/todos/1e926ef2-3764-4218-b223-a84bb2945c34"}]
+[{"uid":"8f2a2f48-9f92-4625-855a-f8e72019e5a3","title":"todo the first","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/8f2a2f48-9f92-4625-855a-f8e72019e5a3","url":"https://todo-backend-sinatra.herokuapp.com/todos/8f2a2f48-9f92-4625-855a-f8e72019e5a3"},{"uid":"0d655306-795b-41d8-951d-546489a2b039","title":"todo the second","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/0d655306-795b-41d8-951d-546489a2b039","url":"https://todo-backend-sinatra.herokuapp.com/todos/0d655306-795b-41d8-951d-546489a2b039"}]
 ```
 
 ## Interaction 20: DELETE/todos
@@ -962,7 +962,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Thu, 20 Aug 2020 17:30:22 GMT
+Date: Wed, 26 Aug 2020 17:39:32 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1008,8 +1008,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 277
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:22 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/b1a9e6ec-6986-49b1-92eb-175167aaa57e
+Date: Wed, 26 Aug 2020 17:39:33 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/7b2f2d44-7563-4be1-96e8-d7a33ce020d3
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1021,7 +1021,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (201 Created:text/html;charset=utf-8):
 
 ```
-{"title":"initial title","uid":"b1a9e6ec-6986-49b1-92eb-175167aaa57e","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/b1a9e6ec-6986-49b1-92eb-175167aaa57e","url":"https://todo-backend-sinatra.herokuapp.com/todos/b1a9e6ec-6986-49b1-92eb-175167aaa57e"}
+{"title":"initial title","uid":"7b2f2d44-7563-4be1-96e8-d7a33ce020d3","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/7b2f2d44-7563-4be1-96e8-d7a33ce020d3","url":"https://todo-backend-sinatra.herokuapp.com/todos/7b2f2d44-7563-4be1-96e8-d7a33ce020d3"}
 ```
 
 ## Interaction 22: DELETE/todos
@@ -1055,7 +1055,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Thu, 20 Aug 2020 17:30:24 GMT
+Date: Wed, 26 Aug 2020 17:39:33 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1101,8 +1101,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 268
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:24 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/7f44c660-95b2-4ab4-8dc4-4d09ba80c9c9
+Date: Wed, 26 Aug 2020 17:39:34 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/15e36e90-4fd5-4967-b9f4-5284ca918dce
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1114,7 +1114,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (201 Created:text/html;charset=utf-8):
 
 ```
-{"title":"blah","uid":"7f44c660-95b2-4ab4-8dc4-4d09ba80c9c9","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/7f44c660-95b2-4ab4-8dc4-4d09ba80c9c9","url":"https://todo-backend-sinatra.herokuapp.com/todos/7f44c660-95b2-4ab4-8dc4-4d09ba80c9c9"}
+{"title":"blah","uid":"15e36e90-4fd5-4967-b9f4-5284ca918dce","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/15e36e90-4fd5-4967-b9f4-5284ca918dce","url":"https://todo-backend-sinatra.herokuapp.com/todos/15e36e90-4fd5-4967-b9f4-5284ca918dce"}
 ```
 
 ## Interaction 24: DELETE/todos
@@ -1148,7 +1148,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Thu, 20 Aug 2020 17:30:25 GMT
+Date: Wed, 26 Aug 2020 17:39:35 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1194,8 +1194,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 268
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:26 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/5d02b088-c25d-41e5-b943-9342cca21a3c
+Date: Wed, 26 Aug 2020 17:39:36 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/11265769-20b0-46b0-97cb-4d8ed0502f9c
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1207,7 +1207,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (201 Created:text/html;charset=utf-8):
 
 ```
-{"title":"blah","uid":"5d02b088-c25d-41e5-b943-9342cca21a3c","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/5d02b088-c25d-41e5-b943-9342cca21a3c","url":"https://todo-backend-sinatra.herokuapp.com/todos/5d02b088-c25d-41e5-b943-9342cca21a3c"}
+{"title":"blah","uid":"11265769-20b0-46b0-97cb-4d8ed0502f9c","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/11265769-20b0-46b0-97cb-4d8ed0502f9c","url":"https://todo-backend-sinatra.herokuapp.com/todos/11265769-20b0-46b0-97cb-4d8ed0502f9c"}
 ```
 
 ## Interaction 26: GET/todos
@@ -1242,7 +1242,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 288
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:27 GMT
+Date: Wed, 26 Aug 2020 17:39:37 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1254,7 +1254,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (200 OK:text/html;charset=utf-8):
 
 ```
-[{"uid":"5d02b088-c25d-41e5-b943-9342cca21a3c","title":"changed title","order":0,"completed":true,"href":"https://todo-backend-sinatra.herokuapp.com/todos/5d02b088-c25d-41e5-b943-9342cca21a3c","url":"https://todo-backend-sinatra.herokuapp.com/todos/5d02b088-c25d-41e5-b943-9342cca21a3c"}]
+[{"uid":"11265769-20b0-46b0-97cb-4d8ed0502f9c","title":"changed title","order":0,"completed":true,"href":"https://todo-backend-sinatra.herokuapp.com/todos/11265769-20b0-46b0-97cb-4d8ed0502f9c","url":"https://todo-backend-sinatra.herokuapp.com/todos/11265769-20b0-46b0-97cb-4d8ed0502f9c"}]
 ```
 
 ## Interaction 27: DELETE/todos
@@ -1288,7 +1288,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Thu, 20 Aug 2020 17:30:27 GMT
+Date: Wed, 26 Aug 2020 17:39:37 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1334,8 +1334,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 268
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:28 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/e385b432-c8ea-4ac1-bf30-0a56fadbc0fa
+Date: Wed, 26 Aug 2020 17:39:37 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/7bfd1166-e44b-4bec-8903-2cd53dd40243
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1347,7 +1347,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (201 Created:text/html;charset=utf-8):
 
 ```
-{"title":"blah","uid":"e385b432-c8ea-4ac1-bf30-0a56fadbc0fa","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/e385b432-c8ea-4ac1-bf30-0a56fadbc0fa","url":"https://todo-backend-sinatra.herokuapp.com/todos/e385b432-c8ea-4ac1-bf30-0a56fadbc0fa"}
+{"title":"blah","uid":"7bfd1166-e44b-4bec-8903-2cd53dd40243","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/7bfd1166-e44b-4bec-8903-2cd53dd40243","url":"https://todo-backend-sinatra.herokuapp.com/todos/7bfd1166-e44b-4bec-8903-2cd53dd40243"}
 ```
 
 ## Interaction 29: GET/todos
@@ -1382,7 +1382,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 2
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:29 GMT
+Date: Wed, 26 Aug 2020 17:39:39 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1430,8 +1430,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 280
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:29 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/d8bcea51-4400-4ad3-99c1-1f110753cc17
+Date: Wed, 26 Aug 2020 17:39:39 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/840d2abe-b7a3-463d-9079-af871a7e353b
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1443,7 +1443,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (201 Created:text/html;charset=utf-8):
 
 ```
-{"title":"blah","order":523,"uid":"d8bcea51-4400-4ad3-99c1-1f110753cc17","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/d8bcea51-4400-4ad3-99c1-1f110753cc17","url":"https://todo-backend-sinatra.herokuapp.com/todos/d8bcea51-4400-4ad3-99c1-1f110753cc17"}
+{"title":"blah","order":523,"uid":"840d2abe-b7a3-463d-9079-af871a7e353b","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/840d2abe-b7a3-463d-9079-af871a7e353b","url":"https://todo-backend-sinatra.herokuapp.com/todos/840d2abe-b7a3-463d-9079-af871a7e353b"}
 ```
 
 ## Interaction 31: POST/todos
@@ -1479,8 +1479,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 279
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:30 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/e94238ec-6be2-480b-b6c1-8b7b90550da2
+Date: Wed, 26 Aug 2020 17:39:39 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/db803c1d-0c97-4043-b358-a76e51b78d5e
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1492,7 +1492,7 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (201 Created:text/html;charset=utf-8):
 
 ```
-{"order":10,"title":"blah","uid":"e94238ec-6be2-480b-b6c1-8b7b90550da2","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/e94238ec-6be2-480b-b6c1-8b7b90550da2","url":"https://todo-backend-sinatra.herokuapp.com/todos/e94238ec-6be2-480b-b6c1-8b7b90550da2"}
+{"order":10,"title":"blah","uid":"db803c1d-0c97-4043-b358-a76e51b78d5e","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/db803c1d-0c97-4043-b358-a76e51b78d5e","url":"https://todo-backend-sinatra.herokuapp.com/todos/db803c1d-0c97-4043-b358-a76e51b78d5e"}
 ```
 
 ## Interaction 32: POST/todos
@@ -1528,8 +1528,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 279
 Content-Type: text/html;charset=utf-8
-Date: Thu, 20 Aug 2020 17:30:31 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/b339670e-5348-4317-b2d7-5a4f909993a1
+Date: Wed, 26 Aug 2020 17:39:41 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/4b1327e8-03b1-4906-8d5a-461c224071b9
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1541,5 +1541,5 @@ X-Xss-Protection: 1; mode=block
 ### Response body recorded for playback (201 Created:text/html;charset=utf-8):
 
 ```
-{"order":10,"title":"blah","uid":"b339670e-5348-4317-b2d7-5a4f909993a1","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/b339670e-5348-4317-b2d7-5a4f909993a1","url":"https://todo-backend-sinatra.herokuapp.com/todos/b339670e-5348-4317-b2d7-5a4f909993a1"}
+{"order":10,"title":"blah","uid":"4b1327e8-03b1-4906-8d5a-461c224071b9","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/4b1327e8-03b1-4906-8d5a-461c224071b9","url":"https://todo-backend-sinatra.herokuapp.com/todos/4b1327e8-03b1-4906-8d5a-461c224071b9"}
 ```
