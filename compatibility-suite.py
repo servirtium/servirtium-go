@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from subprocess import Popen
-
+import time
 
 # launch node
 
@@ -31,6 +31,9 @@ else:
    exit(10)
 
 driver = webdriver.Chrome("/usr/local/bin/chromedriver")
+
+driver.get("https://servirtium.dev/standby")
+time.sleep(5)
 
 driver.get("https://www.todobackend.com/specs/index.html?" + url + "/todos")
 try:
