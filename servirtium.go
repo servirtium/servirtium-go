@@ -2,6 +2,7 @@ package servirtium
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -63,12 +64,12 @@ func disableCors(h http.Handler) http.Handler {
 // StartPlayback ...
 func (s *Impl) StartPlayback(recordFileName string) {
 	s.initServerPlayback(recordFileName)
-	log.Fatal(s.ServerPlayback.ListenAndServe())
+	go log.Fatal(s.ServerPlayback.ListenAndServe())
 }
 
 // EndPlayback ...
 func (s *Impl) EndPlayback() {
-	s.ServerPlayback.Close()
+	s.ServerPlayback.Shutdown(context.TODO())
 }
 
 func (s *Impl) initServerPlayback(recordFileName string) {
@@ -157,7 +158,7 @@ func (s *Impl) anualAvgHandlerPlayback(recordFileName string) func(w http.Respon
 // StartRecord ...
 func (s *Impl) StartRecord(apiURL string) {
 	s.initRecordServer(apiURL)
-	log.Fatal(s.ServerRecord.ListenAndServe())
+	go log.Fatal(s.ServerRecord.ListenAndServe())
 }
 
 // WriteRecord ...
@@ -179,7 +180,7 @@ func (s *Impl) WriteRecord(recordFileName string) {
 
 // EndRecord ...
 func (s *Impl) EndRecord() {
-	s.ServerRecord.Close()
+	s.ServerRecord.Shutdown(context.TODO())
 }
 
 func (s *Impl) initRecordServer(apiURL string) {
