@@ -64,7 +64,7 @@ func disableCors(h http.Handler) http.Handler {
 // StartPlayback ...
 func (s *Impl) StartPlayback(recordFileName string) {
 	s.initServerPlayback(recordFileName)
-	go log.Fatal(s.ServerPlayback.ListenAndServe())
+	log.Fatal(s.ServerPlayback.ListenAndServe())
 }
 
 // EndPlayback ...
@@ -158,7 +158,7 @@ func (s *Impl) anualAvgHandlerPlayback(recordFileName string) func(w http.Respon
 // StartRecord ...
 func (s *Impl) StartRecord(apiURL string) {
 	s.initRecordServer(apiURL)
-	go log.Fatal(s.ServerRecord.ListenAndServe())
+	log.Fatal(s.ServerRecord.ListenAndServe())
 }
 
 // WriteRecord ...

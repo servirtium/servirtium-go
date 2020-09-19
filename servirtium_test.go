@@ -25,12 +25,6 @@ func (s *ServirtiumTestSuite) SetupTest() {
 	s.servirtium = servirtium
 }
 
-func (s *ServirtiumTestSuite) TestStartPlayback() {
-	s.servirtium.StartPlayback("mockName")
-	s.NotNil(s.servirtium.ServerPlayback)
-	s.servirtium.EndPlayback()
-}
-
 func (s *ServirtiumTestSuite) TestInitServerPlayback() {
 	s.servirtium.initServerPlayback("mockName")
 	s.NotNil(s.servirtium.ServerPlayback)
@@ -40,12 +34,6 @@ func (s *ServirtiumTestSuite) TestInitServerPlayback() {
 func (s *ServirtiumTestSuite) TestAnualAvgHandlerPlayback() {
 	result := s.servirtium.anualAvgHandlerPlayback("mockName")
 	s.NotNil(result)
-}
-
-func (s *ServirtiumTestSuite) TestStartRecord() {
-	s.servirtium.StartRecord("https://google.com")
-	s.NotNil(s.servirtium.ServerRecord)
-	s.servirtium.EndRecord()
 }
 
 func (s *ServirtiumTestSuite) TestInitRecordServer() {
