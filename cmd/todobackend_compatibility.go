@@ -48,7 +48,6 @@ func main() {
 			regexp.MustCompile("http://localhost:61417"): "https://todo-backend-sinatra.herokuapp.com",
 			regexp.MustCompile("localhost:61417"):        "todo-backend-sinatra.herokuapp.com",
 		})
-		regexp.MustCompile("https")
 		servirtium.SetCallerResponseHeaderReplacements(map[*regexp.Regexp]string{
 			regexp.MustCompile("https://todo-backend-sinatra.herokuapp.com"): "http://localhost:61417",
 			regexp.MustCompile("todo-backend-sinatra.herokuapp.com"):         "localhost:61417",

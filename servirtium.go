@@ -21,10 +21,10 @@ import (
 
 // Impl ...
 type Impl struct {
-	ServerPlayback  *http.Server
-	ServerRecord    *http.Server
-	requestSequence int64
-	content         string
+	ServerPlayback      *http.Server
+	ServerRecord        *http.Server
+	interactionSequence int64
+	content             string
 	// caller request
 	callerRequestHeadersRemoval     []string
 	callerRequestHeaderReplacements map[*regexp.Regexp]string
@@ -46,7 +46,7 @@ type Impl struct {
 // NewServirtium ...
 func NewServirtium() *Impl {
 	return &Impl{
-		requestSequence:              0,
+		interactionSequence:          0,
 		content:                      "",
 		callerRequestHeadersRemoval:  []string{},
 		recordRequestHeadersRemoval:  []string{},
@@ -90,9 +90,9 @@ func (s *Impl) initServerPlaybackOnPort(recordFileName string, port int) {
 	s.ServerPlayback = srv
 }
 
-func (s *Impl) getInteraction(data string) string {
+func (s *Impl) getInteraction(data string, interactionSequence int64) string {
 	interactions := strings.Split(fmt.Sprintf("\n%s", data), "\n## Interaction ")
-	return interactions[s.requestSequence+1]
+	return interactions[interactionSequence+1]
 }
 
 func (s *Impl) parseHeaders(content string) map[string]string {
@@ -103,7 +103,7 @@ func (s *Impl) parseHeaders(content string) map[string]string {
 	headersContents := strings.Split(newLineReplaceByCommaContent, ",")
 	for _, v := range headersContents {
 		replaceByComma := strings.ReplaceAll(v, ": ", ",")
-		keysAndValues := strings.Split(replaceByComma, ": ")
+		keysAndValues := strings.Split(replaceByComma, ",")
 		keyIndex := 0
 		valueIndex := 1
 		isValidHeaders := len(keysAndValues) > 1
@@ -114,11 +114,12 @@ func (s *Impl) parseHeaders(content string) map[string]string {
 	return headers
 }
 
-func (s *Impl) getPlaybackResponse(data string) (string, map[string]string) {
+func (s *Impl) getPlaybackResponse(data string) (string, map[string]string, string) {
 	var (
 		responseHeaders map[string]string
 		responseBody    string
 		sections        = strings.Split(data, "\n### ")
+		statusCode      string
 	)
 	for _, v := range sections {
 		if strings.HasPrefix(v, "Response headers recorded for playback") {
@@ -126,11 +127,11 @@ func (s *Impl) getPlaybackResponse(data string) (string, map[string]string) {
 			responseHeaders = s.parseHeaders(headerContent)
 		}
 		if strings.HasPrefix(v, "Response body recorded for playback") {
-			responseBody = strings.Split(v, "```")[1]
-			responseHeaders["content-length"] = fmt.Sprintf("%d", len(responseBody))
+			responseBody = strings.TrimSpace(strings.Split(v, "```")[1])
+			statusCode = strings.Split(strings.Split(v, "(")[1], ": ")[0]
 		}
 	}
-	return responseBody, responseHeaders
+	return responseBody, responseHeaders, statusCode
 }
 
 func removeHeadersPlayback(headers map[string]string, deleteItems []string) map[string]string {
@@ -166,15 +167,25 @@ func (s *Impl) playbackHandler(recordFileName string) func(w http.ResponseWriter
 			_, _ = w.Write([]byte("Internal Server Error"))
 			return
 		}
-		interaction := s.getInteraction(string(data))
-		body, headers := s.getPlaybackResponse(interaction)
+		interaction := s.getInteraction(string(data), s.interactionSequence)
+		body, headers, status := s.getPlaybackResponse(interaction)
+		callerResponseBody := replaceContent(body, s.callerResponseBodyReplacement)
 		callerResponseHeaders := removeHeadersPlayback(headers, s.callerResponseHeadersRemoval)
 		callerResponseHeaders = replaceHeadersPlayback(callerResponseHeaders, s.callerResponseHeaderReplacements)
 		for k, v := range callerResponseHeaders {
 			w.Header().Set(k, v)
 		}
-		w.WriteHeader(http.StatusOK)
-		_, _ = w.Write([]byte(body))
+		w.Header().Del("Content-Length")
+		s.interactionSequence = s.interactionSequence + 1
+		statusCode, err := strconv.Atoi(status)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			_, _ = w.Write([]byte("Internal Server Error"))
+			return
+		}
+
+		w.WriteHeader(statusCode)
+		_, _ = w.Write([]byte(callerResponseBody))
 		return
 	}
 }
@@ -239,7 +250,7 @@ type recordData struct {
 	RequestBody         string
 	ResponseHeader      map[string][]string
 	ResponseBody        string
-	ResponseStatus      string
+	ResponseStatus      int
 	ResponseContentType string
 }
 
@@ -321,7 +332,7 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 			ResponseHeader:      newRecordResponseHeaders,
 			ResponseBody:        newRecordResponseBody,
 			ResponseContentType: response.Header.Get("Content-Type"),
-			ResponseStatus:      response.Status,
+			ResponseStatus:      response.StatusCode,
 		})
 
 		// Mutate caller response headers and body
@@ -356,7 +367,7 @@ func (s *Impl) checkMarkdownExists(path string) bool {
 }
 
 func (s *Impl) appendContentInFile(currentContent, newContent string) string {
-	if s.requestSequence == 0 {
+	if s.interactionSequence == 0 {
 		return newContent
 	}
 	finalContent := fmt.Sprintf("%s\n%s", currentContent, newContent)
@@ -377,7 +388,7 @@ func (s *Impl) record(params recordData) {
 		log.Fatal(err)
 	}
 	data := recordData{
-		RecordSequence:      s.requestSequence,
+		RecordSequence:      s.interactionSequence,
 		RequestMethod:       params.RequestMethod,
 		RequestURLPath:      params.RequestURLPath,
 		RequestHeader:       params.RequestHeader,
@@ -392,7 +403,7 @@ func (s *Impl) record(params recordData) {
 	newContent := buffer.Bytes()
 	finalContent := s.appendContentInFile(s.content, string(newContent))
 	s.content = finalContent
-	s.requestSequence = s.requestSequence + 1
+	s.interactionSequence = s.interactionSequence + 1
 }
 
 // SetCallerRequestHeadersRemoval ...

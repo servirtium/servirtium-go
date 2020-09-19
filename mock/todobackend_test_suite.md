@@ -8,11 +8,12 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos the pre-requisites the api root responds to a GET (i.e. the server is up and accessible, CORS headers are set up)
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -28,9 +29,9 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 ```
 Access-Control-Allow-Origin: *
 Connection: keep-alive
-Content-Length: 562
+Content-Length: 842
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:24 GMT
+Date: Sat, 19 Sep 2020 16:29:31 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -39,10 +40,10 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (200 OK:text/html;charset=utf-8):
+### Response body recorded for playback (200: text/html;charset=utf-8):
 
 ```
-[{"uid":"434c2fb2-639b-40bf-99c7-2be701f3296c","title":"blah","order":523,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/434c2fb2-639b-40bf-99c7-2be701f3296c","url":"https://todo-backend-sinatra.herokuapp.com/todos/434c2fb2-639b-40bf-99c7-2be701f3296c"},{"uid":"1a9d93bc-479b-4078-bc2f-622c412114c8","title":"blah","order":10,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/1a9d93bc-479b-4078-bc2f-622c412114c8","url":"https://todo-backend-sinatra.herokuapp.com/todos/1a9d93bc-479b-4078-bc2f-622c412114c8"}]
+[{"uid":"cd133afa-6fc5-4b9c-9a41-28c6ad2620cf","title":"blah","order":523,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/cd133afa-6fc5-4b9c-9a41-28c6ad2620cf","url":"https://todo-backend-sinatra.herokuapp.com/todos/cd133afa-6fc5-4b9c-9a41-28c6ad2620cf"},{"uid":"ebce16d3-ad6d-4d30-ac50-68b844808ae9","title":"blah","order":95,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/ebce16d3-ad6d-4d30-ac50-68b844808ae9","url":"https://todo-backend-sinatra.herokuapp.com/todos/ebce16d3-ad6d-4d30-ac50-68b844808ae9"},{"uid":"e3594c19-60fa-435e-851d-7025bec510b1","title":"blah","order":95,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/e3594c19-60fa-435e-851d-7025bec510b1","url":"https://todo-backend-sinatra.herokuapp.com/todos/e3594c19-60fa-435e-851d-7025bec510b1"}]
 ```
 
 ## Interaction 1: POST/todos
@@ -56,11 +57,12 @@ Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Length: 18
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos the pre-requisites the api root responds to a POST with the todo which was posted to it
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -78,8 +80,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 270
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:24 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/b7d00c22-54ca-4425-98ac-e33672eade0d
+Date: Sat, 19 Sep 2020 16:29:32 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/bea9bc5a-53d3-4206-ba79-0743ce8053cd
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -88,10 +90,10 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (201 Created:text/html;charset=utf-8):
+### Response body recorded for playback (201: text/html;charset=utf-8):
 
 ```
-{"title":"a todo","uid":"b7d00c22-54ca-4425-98ac-e33672eade0d","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/b7d00c22-54ca-4425-98ac-e33672eade0d","url":"https://todo-backend-sinatra.herokuapp.com/todos/b7d00c22-54ca-4425-98ac-e33672eade0d"}
+{"title":"a todo","uid":"bea9bc5a-53d3-4206-ba79-0743ce8053cd","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/bea9bc5a-53d3-4206-ba79-0743ce8053cd","url":"https://todo-backend-sinatra.herokuapp.com/todos/bea9bc5a-53d3-4206-ba79-0743ce8053cd"}
 ```
 
 ## Interaction 2: DELETE/todos
@@ -104,11 +106,12 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos the pre-requisites the api root responds successfully to a DELETE
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -125,14 +128,14 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Wed, 26 Aug 2020 17:39:24 GMT
+Date: Sat, 19 Sep 2020 16:29:33 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
 
 ```
 
-### Response body recorded for playback (204 No Content:):
+### Response body recorded for playback (204: ):
 
 ```
 
@@ -148,11 +151,12 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos the pre-requisites after a DELETE the api root responds to a GET with a JSON representation of an empty array
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -169,14 +173,14 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Wed, 26 Aug 2020 17:39:25 GMT
+Date: Sat, 19 Sep 2020 16:29:34 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
 
 ```
 
-### Response body recorded for playback (204 No Content:):
+### Response body recorded for playback (204: ):
 
 ```
 
@@ -192,11 +196,12 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos the pre-requisites after a DELETE the api root responds to a GET with a JSON representation of an empty array
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -214,7 +219,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 2
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:25 GMT
+Date: Sat, 19 Sep 2020 16:29:34 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -223,7 +228,7 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (200 OK:text/html;charset=utf-8):
+### Response body recorded for playback (200: text/html;charset=utf-8):
 
 ```
 []
@@ -239,11 +244,12 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at http://todo-backend-sinatra.herokuapp.com/todos the pre-requisites after a DELETE the api root responds to a GET with a JSON representation of an empty array
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -260,14 +266,14 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Wed, 26 Aug 2020 17:39:25 GMT
+Date: Sat, 19 Sep 2020 16:29:35 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
 
 ```
 
-### Response body recorded for playback (204 No Content:):
+### Response body recorded for playback (204: ):
 
 ```
 
@@ -284,11 +290,12 @@ Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Length: 24
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at http://todo-backend-sinatra.herokuapp.com/todos storing new todos by posting to the root url adds a new todo to the list of todos at the root url
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -306,8 +313,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 276
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:26 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/b77bb73b-c21a-413e-b684-731f86903782
+Date: Sat, 19 Sep 2020 16:29:35 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/66f99e53-0e3d-4a42-b94c-c5b6a5485ca0
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -316,10 +323,10 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (201 Created:text/html;charset=utf-8):
+### Response body recorded for playback (201: text/html;charset=utf-8):
 
 ```
-{"title":"walk the dog","uid":"b77bb73b-c21a-413e-b684-731f86903782","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/b77bb73b-c21a-413e-b684-731f86903782","url":"https://todo-backend-sinatra.herokuapp.com/todos/b77bb73b-c21a-413e-b684-731f86903782"}
+{"title":"walk the dog","uid":"66f99e53-0e3d-4a42-b94c-c5b6a5485ca0","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/66f99e53-0e3d-4a42-b94c-c5b6a5485ca0","url":"https://todo-backend-sinatra.herokuapp.com/todos/66f99e53-0e3d-4a42-b94c-c5b6a5485ca0"}
 ```
 
 ## Interaction 7: GET/todos
@@ -332,11 +339,12 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos storing new todos by posting to the root url adds a new todo to the list of todos at the root url
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -354,7 +362,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 288
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:26 GMT
+Date: Sat, 19 Sep 2020 16:29:35 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -363,10 +371,10 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (200 OK:text/html;charset=utf-8):
+### Response body recorded for playback (200: text/html;charset=utf-8):
 
 ```
-[{"uid":"b77bb73b-c21a-413e-b684-731f86903782","title":"walk the dog","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/b77bb73b-c21a-413e-b684-731f86903782","url":"https://todo-backend-sinatra.herokuapp.com/todos/b77bb73b-c21a-413e-b684-731f86903782"}]
+[{"uid":"66f99e53-0e3d-4a42-b94c-c5b6a5485ca0","title":"walk the dog","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/66f99e53-0e3d-4a42-b94c-c5b6a5485ca0","url":"https://todo-backend-sinatra.herokuapp.com/todos/66f99e53-0e3d-4a42-b94c-c5b6a5485ca0"}]
 ```
 
 ## Interaction 8: DELETE/todos
@@ -379,11 +387,12 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos storing new todos by posting to the root url adds a new todo to the list of todos at the root url
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -400,14 +409,14 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Wed, 26 Aug 2020 17:39:26 GMT
+Date: Sat, 19 Sep 2020 16:29:37 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
 
 ```
 
-### Response body recorded for playback (204 No Content:):
+### Response body recorded for playback (204: ):
 
 ```
 
@@ -424,11 +433,12 @@ Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos storing new todos by posting to the root url sets up a new todo as initially not completed
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -446,8 +456,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 268
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:26 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/e843a487-cff4-4599-9cb1-13cbcc579a9f
+Date: Sat, 19 Sep 2020 16:29:37 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/b50f4c92-8895-4171-86fe-196c0823bc2f
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -456,10 +466,10 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (201 Created:text/html;charset=utf-8):
+### Response body recorded for playback (201: text/html;charset=utf-8):
 
 ```
-{"title":"blah","uid":"e843a487-cff4-4599-9cb1-13cbcc579a9f","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/e843a487-cff4-4599-9cb1-13cbcc579a9f","url":"https://todo-backend-sinatra.herokuapp.com/todos/e843a487-cff4-4599-9cb1-13cbcc579a9f"}
+{"title":"blah","uid":"b50f4c92-8895-4171-86fe-196c0823bc2f","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/b50f4c92-8895-4171-86fe-196c0823bc2f","url":"https://todo-backend-sinatra.herokuapp.com/todos/b50f4c92-8895-4171-86fe-196c0823bc2f"}
 ```
 
 ## Interaction 10: GET/todos
@@ -472,11 +482,12 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos storing new todos by posting to the root url sets up a new todo as initially not completed
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -494,7 +505,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 280
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:27 GMT
+Date: Sat, 19 Sep 2020 16:29:37 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -503,10 +514,10 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (200 OK:text/html;charset=utf-8):
+### Response body recorded for playback (200: text/html;charset=utf-8):
 
 ```
-[{"uid":"e843a487-cff4-4599-9cb1-13cbcc579a9f","title":"blah","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/e843a487-cff4-4599-9cb1-13cbcc579a9f","url":"https://todo-backend-sinatra.herokuapp.com/todos/e843a487-cff4-4599-9cb1-13cbcc579a9f"}]
+[{"uid":"b50f4c92-8895-4171-86fe-196c0823bc2f","title":"blah","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/b50f4c92-8895-4171-86fe-196c0823bc2f","url":"https://todo-backend-sinatra.herokuapp.com/todos/b50f4c92-8895-4171-86fe-196c0823bc2f"}]
 ```
 
 ## Interaction 11: DELETE/todos
@@ -519,11 +530,12 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos storing new todos by posting to the root url sets up a new todo as initially not completed
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -540,14 +552,14 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Wed, 26 Aug 2020 17:39:27 GMT
+Date: Sat, 19 Sep 2020 16:29:38 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
 
 ```
 
-### Response body recorded for playback (204 No Content:):
+### Response body recorded for playback (204: ):
 
 ```
 
@@ -564,11 +576,12 @@ Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos storing new todos by posting to the root url each new todo has a url
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -586,8 +599,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 268
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:27 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/293e4926-10c3-4924-b4b2-54c728f5fb5a
+Date: Sat, 19 Sep 2020 16:29:38 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/3dfa0701-b948-4e04-b8b2-4ce298313de1
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -596,10 +609,10 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (201 Created:text/html;charset=utf-8):
+### Response body recorded for playback (201: text/html;charset=utf-8):
 
 ```
-{"title":"blah","uid":"293e4926-10c3-4924-b4b2-54c728f5fb5a","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/293e4926-10c3-4924-b4b2-54c728f5fb5a","url":"https://todo-backend-sinatra.herokuapp.com/todos/293e4926-10c3-4924-b4b2-54c728f5fb5a"}
+{"title":"blah","uid":"3dfa0701-b948-4e04-b8b2-4ce298313de1","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/3dfa0701-b948-4e04-b8b2-4ce298313de1","url":"https://todo-backend-sinatra.herokuapp.com/todos/3dfa0701-b948-4e04-b8b2-4ce298313de1"}
 ```
 
 ## Interaction 13: GET/todos
@@ -612,11 +625,12 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos storing new todos by posting to the root url each new todo has a url
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -634,7 +648,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 280
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:28 GMT
+Date: Sat, 19 Sep 2020 16:29:38 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -643,10 +657,10 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (200 OK:text/html;charset=utf-8):
+### Response body recorded for playback (200: text/html;charset=utf-8):
 
 ```
-[{"uid":"293e4926-10c3-4924-b4b2-54c728f5fb5a","title":"blah","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/293e4926-10c3-4924-b4b2-54c728f5fb5a","url":"https://todo-backend-sinatra.herokuapp.com/todos/293e4926-10c3-4924-b4b2-54c728f5fb5a"}]
+[{"uid":"3dfa0701-b948-4e04-b8b2-4ce298313de1","title":"blah","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/3dfa0701-b948-4e04-b8b2-4ce298313de1","url":"https://todo-backend-sinatra.herokuapp.com/todos/3dfa0701-b948-4e04-b8b2-4ce298313de1"}]
 ```
 
 ## Interaction 14: DELETE/todos
@@ -659,11 +673,12 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos storing new todos by posting to the root url each new todo has a url
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -680,14 +695,14 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Wed, 26 Aug 2020 17:39:28 GMT
+Date: Sat, 19 Sep 2020 16:29:39 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
 
 ```
 
-### Response body recorded for playback (204 No Content:):
+### Response body recorded for playback (204: ):
 
 ```
 
@@ -704,11 +719,12 @@ Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Length: 19
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at http://todo-backend-sinatra.herokuapp.com/todos storing new todos by posting to the root url each new todo has a url, which returns a todo
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -726,8 +742,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 271
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:28 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/833fb42e-938b-4ba8-8e94-4f273c59b3fa
+Date: Sat, 19 Sep 2020 16:29:39 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/d4869de4-8479-4c04-8ad7-13d2620fc127
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -736,13 +752,13 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (201 Created:text/html;charset=utf-8):
+### Response body recorded for playback (201: text/html;charset=utf-8):
 
 ```
-{"title":"my todo","uid":"833fb42e-938b-4ba8-8e94-4f273c59b3fa","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/833fb42e-938b-4ba8-8e94-4f273c59b3fa","url":"https://todo-backend-sinatra.herokuapp.com/todos/833fb42e-938b-4ba8-8e94-4f273c59b3fa"}
+{"title":"my todo","uid":"d4869de4-8479-4c04-8ad7-13d2620fc127","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/d4869de4-8479-4c04-8ad7-13d2620fc127","url":"https://todo-backend-sinatra.herokuapp.com/todos/d4869de4-8479-4c04-8ad7-13d2620fc127"}
 ```
 
-## Interaction 16: DELETE/todos
+## Interaction 16: GET/todos/d4869de4-8479-4c04-8ad7-13d2620fc127
 
 ### Request headers recorded for playback:
 
@@ -752,11 +768,60 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos storing new todos by posting to the root url each new todo has a url, which returns a todo
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 281
+Content-Type: text/html;charset=utf-8
+Date: Sat, 19 Sep 2020 16:29:39 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+
+```
+
+### Response body recorded for playback (200: text/html;charset=utf-8):
+
+```
+{"uid":"d4869de4-8479-4c04-8ad7-13d2620fc127","title":"my todo","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/d4869de4-8479-4c04-8ad7-13d2620fc127","url":"https://todo-backend-sinatra.herokuapp.com/todos/d4869de4-8479-4c04-8ad7-13d2620fc127"}
+```
+
+## Interaction 17: DELETE/todos
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos storing new todos by posting to the root url each new todo has a url, which returns a todo
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -773,20 +838,20 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Wed, 26 Aug 2020 17:39:30 GMT
+Date: Sat, 19 Sep 2020 16:29:40 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
 
 ```
 
-### Response body recorded for playback (204 No Content:):
+### Response body recorded for playback (204: ):
 
 ```
 
 ```
 
-## Interaction 17: POST/todos
+## Interaction 18: POST/todos
 
 ### Request headers recorded for playback:
 
@@ -797,11 +862,12 @@ Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Length: 26
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo can navigate from a list of todos to an individual todo via urls
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -819,8 +885,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 278
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:30 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/8f2a2f48-9f92-4625-855a-f8e72019e5a3
+Date: Sat, 19 Sep 2020 16:29:40 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/2a10e28c-89cc-4691-afa7-5ae4b3764a9c
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -829,13 +895,13 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (201 Created:text/html;charset=utf-8):
+### Response body recorded for playback (201: text/html;charset=utf-8):
 
 ```
-{"title":"todo the first","uid":"8f2a2f48-9f92-4625-855a-f8e72019e5a3","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/8f2a2f48-9f92-4625-855a-f8e72019e5a3","url":"https://todo-backend-sinatra.herokuapp.com/todos/8f2a2f48-9f92-4625-855a-f8e72019e5a3"}
+{"title":"todo the first","uid":"2a10e28c-89cc-4691-afa7-5ae4b3764a9c","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/2a10e28c-89cc-4691-afa7-5ae4b3764a9c","url":"https://todo-backend-sinatra.herokuapp.com/todos/2a10e28c-89cc-4691-afa7-5ae4b3764a9c"}
 ```
 
-## Interaction 18: POST/todos
+## Interaction 19: POST/todos
 
 ### Request headers recorded for playback:
 
@@ -846,11 +912,12 @@ Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Length: 27
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo can navigate from a list of todos to an individual todo via urls
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -868,8 +935,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 279
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:31 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/0d655306-795b-41d8-951d-546489a2b039
+Date: Sat, 19 Sep 2020 16:29:40 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/ef550549-173b-45a3-81ea-37c55f7e18b3
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -878,13 +945,13 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (201 Created:text/html;charset=utf-8):
+### Response body recorded for playback (201: text/html;charset=utf-8):
 
 ```
-{"title":"todo the second","uid":"0d655306-795b-41d8-951d-546489a2b039","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/0d655306-795b-41d8-951d-546489a2b039","url":"https://todo-backend-sinatra.herokuapp.com/todos/0d655306-795b-41d8-951d-546489a2b039"}
+{"title":"todo the second","uid":"ef550549-173b-45a3-81ea-37c55f7e18b3","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/ef550549-173b-45a3-81ea-37c55f7e18b3","url":"https://todo-backend-sinatra.herokuapp.com/todos/ef550549-173b-45a3-81ea-37c55f7e18b3"}
 ```
 
-## Interaction 19: GET/todos
+## Interaction 20: GET/todos
 
 ### Request headers recorded for playback:
 
@@ -894,11 +961,12 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo can navigate from a list of todos to an individual todo via urls
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -916,7 +984,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 580
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:31 GMT
+Date: Sat, 19 Sep 2020 16:29:41 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -925,13 +993,13 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (200 OK:text/html;charset=utf-8):
+### Response body recorded for playback (200: text/html;charset=utf-8):
 
 ```
-[{"uid":"8f2a2f48-9f92-4625-855a-f8e72019e5a3","title":"todo the first","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/8f2a2f48-9f92-4625-855a-f8e72019e5a3","url":"https://todo-backend-sinatra.herokuapp.com/todos/8f2a2f48-9f92-4625-855a-f8e72019e5a3"},{"uid":"0d655306-795b-41d8-951d-546489a2b039","title":"todo the second","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/0d655306-795b-41d8-951d-546489a2b039","url":"https://todo-backend-sinatra.herokuapp.com/todos/0d655306-795b-41d8-951d-546489a2b039"}]
+[{"uid":"2a10e28c-89cc-4691-afa7-5ae4b3764a9c","title":"todo the first","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/2a10e28c-89cc-4691-afa7-5ae4b3764a9c","url":"https://todo-backend-sinatra.herokuapp.com/todos/2a10e28c-89cc-4691-afa7-5ae4b3764a9c"},{"uid":"ef550549-173b-45a3-81ea-37c55f7e18b3","title":"todo the second","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/ef550549-173b-45a3-81ea-37c55f7e18b3","url":"https://todo-backend-sinatra.herokuapp.com/todos/ef550549-173b-45a3-81ea-37c55f7e18b3"}]
 ```
 
-## Interaction 20: DELETE/todos
+## Interaction 21: GET/todos/2a10e28c-89cc-4691-afa7-5ae4b3764a9c
 
 ### Request headers recorded for playback:
 
@@ -941,290 +1009,12 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo can navigate from a list of todos to an individual todo via urls
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
-
-```
-
-### Request body recorded for playback ():
-
-```
-
-```
-
-
-### Response headers recorded for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 0
-Date: Wed, 26 Aug 2020 17:39:32 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-
-```
-
-### Response body recorded for playback (204 No Content:):
-
-```
-
-```
-
-## Interaction 21: POST/todos
-
-### Request headers recorded for playback:
-
-```
-Accept: text/plain, */*; q=0.01
-Accept-Encoding: gzip, deflate, br
-Accept-Language: en-US,en;q=0.9
-Connection: keep-alive
-Content-Length: 25
-Content-Type: application/json
-Origin: https://www.todobackend.com
-Sec-Fetch-Dest: empty
-Sec-Fetch-Mode: cors
-Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
-
-```
-
-### Request body recorded for playback ():
-
-```
-{"title":"initial title"}
-```
-
-
-### Response headers recorded for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 277
-Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:33 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/7b2f2d44-7563-4be1-96e8-d7a33ce020d3
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-
-```
-
-### Response body recorded for playback (201 Created:text/html;charset=utf-8):
-
-```
-{"title":"initial title","uid":"7b2f2d44-7563-4be1-96e8-d7a33ce020d3","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/7b2f2d44-7563-4be1-96e8-d7a33ce020d3","url":"https://todo-backend-sinatra.herokuapp.com/todos/7b2f2d44-7563-4be1-96e8-d7a33ce020d3"}
-```
-
-## Interaction 22: DELETE/todos
-
-### Request headers recorded for playback:
-
-```
-Accept: text/plain, */*; q=0.01
-Accept-Encoding: gzip, deflate, br
-Accept-Language: en-US,en;q=0.9
-Connection: keep-alive
-Content-Type: application/json
-Origin: https://www.todobackend.com
-Sec-Fetch-Dest: empty
-Sec-Fetch-Mode: cors
-Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
-
-```
-
-### Request body recorded for playback ():
-
-```
-
-```
-
-
-### Response headers recorded for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 0
-Date: Wed, 26 Aug 2020 17:39:33 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-
-```
-
-### Response body recorded for playback (204 No Content:):
-
-```
-
-```
-
-## Interaction 23: POST/todos
-
-### Request headers recorded for playback:
-
-```
-Accept: text/plain, */*; q=0.01
-Accept-Encoding: gzip, deflate, br
-Accept-Language: en-US,en;q=0.9
-Connection: keep-alive
-Content-Length: 16
-Content-Type: application/json
-Origin: https://www.todobackend.com
-Sec-Fetch-Dest: empty
-Sec-Fetch-Mode: cors
-Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
-
-```
-
-### Request body recorded for playback ():
-
-```
-{"title":"blah"}
-```
-
-
-### Response headers recorded for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 268
-Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:34 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/15e36e90-4fd5-4967-b9f4-5284ca918dce
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-
-```
-
-### Response body recorded for playback (201 Created:text/html;charset=utf-8):
-
-```
-{"title":"blah","uid":"15e36e90-4fd5-4967-b9f4-5284ca918dce","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/15e36e90-4fd5-4967-b9f4-5284ca918dce","url":"https://todo-backend-sinatra.herokuapp.com/todos/15e36e90-4fd5-4967-b9f4-5284ca918dce"}
-```
-
-## Interaction 24: DELETE/todos
-
-### Request headers recorded for playback:
-
-```
-Accept: text/plain, */*; q=0.01
-Accept-Encoding: gzip, deflate, br
-Accept-Language: en-US,en;q=0.9
-Connection: keep-alive
-Content-Type: application/json
-Origin: https://www.todobackend.com
-Sec-Fetch-Dest: empty
-Sec-Fetch-Mode: cors
-Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
-
-```
-
-### Request body recorded for playback ():
-
-```
-
-```
-
-
-### Response headers recorded for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 0
-Date: Wed, 26 Aug 2020 17:39:35 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-
-```
-
-### Response body recorded for playback (204 No Content:):
-
-```
-
-```
-
-## Interaction 25: POST/todos
-
-### Request headers recorded for playback:
-
-```
-Accept: text/plain, */*; q=0.01
-Accept-Encoding: gzip, deflate, br
-Accept-Language: en-US,en;q=0.9
-Connection: keep-alive
-Content-Length: 16
-Content-Type: application/json
-Origin: https://www.todobackend.com
-Sec-Fetch-Dest: empty
-Sec-Fetch-Mode: cors
-Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
-
-```
-
-### Request body recorded for playback ():
-
-```
-{"title":"blah"}
-```
-
-
-### Response headers recorded for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 268
-Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:36 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/11265769-20b0-46b0-97cb-4d8ed0502f9c
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-
-```
-
-### Response body recorded for playback (201 Created:text/html;charset=utf-8):
-
-```
-{"title":"blah","uid":"11265769-20b0-46b0-97cb-4d8ed0502f9c","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/11265769-20b0-46b0-97cb-4d8ed0502f9c","url":"https://todo-backend-sinatra.herokuapp.com/todos/11265769-20b0-46b0-97cb-4d8ed0502f9c"}
-```
-
-## Interaction 26: GET/todos
-
-### Request headers recorded for playback:
-
-```
-Accept: text/plain, */*; q=0.01
-Accept-Encoding: gzip, deflate, br
-Accept-Language: en-US,en;q=0.9
-Connection: keep-alive
-Content-Type: application/json
-Origin: https://www.todobackend.com
-Sec-Fetch-Dest: empty
-Sec-Fetch-Mode: cors
-Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -1242,7 +1032,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 288
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:37 GMT
+Date: Sat, 19 Sep 2020 16:29:41 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1251,13 +1041,13 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (200 OK:text/html;charset=utf-8):
+### Response body recorded for playback (200: text/html;charset=utf-8):
 
 ```
-[{"uid":"11265769-20b0-46b0-97cb-4d8ed0502f9c","title":"changed title","order":0,"completed":true,"href":"https://todo-backend-sinatra.herokuapp.com/todos/11265769-20b0-46b0-97cb-4d8ed0502f9c","url":"https://todo-backend-sinatra.herokuapp.com/todos/11265769-20b0-46b0-97cb-4d8ed0502f9c"}]
+{"uid":"2a10e28c-89cc-4691-afa7-5ae4b3764a9c","title":"todo the first","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/2a10e28c-89cc-4691-afa7-5ae4b3764a9c","url":"https://todo-backend-sinatra.herokuapp.com/todos/2a10e28c-89cc-4691-afa7-5ae4b3764a9c"}
 ```
 
-## Interaction 27: DELETE/todos
+## Interaction 22: DELETE/todos
 
 ### Request headers recorded for playback:
 
@@ -1267,11 +1057,12 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo can navigate from a list of todos to an individual todo via urls
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -1288,20 +1079,164 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Wed, 26 Aug 2020 17:39:37 GMT
+Date: Sat, 19 Sep 2020 16:29:41 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
 
 ```
 
-### Response body recorded for playback (204 No Content:):
+### Response body recorded for playback (204: ):
 
 ```
 
 ```
 
-## Interaction 28: POST/todos
+## Interaction 23: POST/todos
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Length: 25
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo can change the todo's title by PATCHing to the todo's url
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+{"title":"initial title"}
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 277
+Content-Type: text/html;charset=utf-8
+Date: Sat, 19 Sep 2020 16:29:42 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/2445817e-4c7f-46ce-bc84-6bbb6fb4a680
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+
+```
+
+### Response body recorded for playback (201: text/html;charset=utf-8):
+
+```
+{"title":"initial title","uid":"2445817e-4c7f-46ce-bc84-6bbb6fb4a680","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/2445817e-4c7f-46ce-bc84-6bbb6fb4a680","url":"https://todo-backend-sinatra.herokuapp.com/todos/2445817e-4c7f-46ce-bc84-6bbb6fb4a680"}
+```
+
+## Interaction 24: PATCH/todos/2445817e-4c7f-46ce-bc84-6bbb6fb4a680
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Length: 25
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo can change the todo's title by PATCHing to the todo's url
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+{"title":"bathe the cat"}
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 287
+Content-Type: text/html;charset=utf-8
+Date: Sat, 19 Sep 2020 16:29:42 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+
+```
+
+### Response body recorded for playback (200: text/html;charset=utf-8):
+
+```
+{"uid":"2445817e-4c7f-46ce-bc84-6bbb6fb4a680","title":"bathe the cat","order":0,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/2445817e-4c7f-46ce-bc84-6bbb6fb4a680","url":"https://todo-backend-sinatra.herokuapp.com/todos/2445817e-4c7f-46ce-bc84-6bbb6fb4a680"}
+```
+
+## Interaction 25: DELETE/todos
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo can change the todo's title by PATCHing to the todo's url
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 0
+Date: Sat, 19 Sep 2020 16:29:42 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+
+```
+
+### Response body recorded for playback (204: ):
+
+```
+
+```
+
+## Interaction 26: POST/todos
 
 ### Request headers recorded for playback:
 
@@ -1312,11 +1247,12 @@ Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at http://todo-backend-sinatra.herokuapp.com/todos working with an existing todo can change the todo's completedness by PATCHing to the todo's url
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -1334,8 +1270,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 268
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:37 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/7bfd1166-e44b-4bec-8903-2cd53dd40243
+Date: Sat, 19 Sep 2020 16:29:43 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/de562f6a-3902-4f17-9b11-d4fe596a2fbf
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1344,13 +1280,62 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (201 Created:text/html;charset=utf-8):
+### Response body recorded for playback (201: text/html;charset=utf-8):
 
 ```
-{"title":"blah","uid":"7bfd1166-e44b-4bec-8903-2cd53dd40243","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/7bfd1166-e44b-4bec-8903-2cd53dd40243","url":"https://todo-backend-sinatra.herokuapp.com/todos/7bfd1166-e44b-4bec-8903-2cd53dd40243"}
+{"title":"blah","uid":"de562f6a-3902-4f17-9b11-d4fe596a2fbf","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/de562f6a-3902-4f17-9b11-d4fe596a2fbf","url":"https://todo-backend-sinatra.herokuapp.com/todos/de562f6a-3902-4f17-9b11-d4fe596a2fbf"}
 ```
 
-## Interaction 29: GET/todos
+## Interaction 27: PATCH/todos/de562f6a-3902-4f17-9b11-d4fe596a2fbf
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Length: 18
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo can change the todo's completedness by PATCHing to the todo's url
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+{"completed":true}
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 277
+Content-Type: text/html;charset=utf-8
+Date: Sat, 19 Sep 2020 16:29:43 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+
+```
+
+### Response body recorded for playback (200: text/html;charset=utf-8):
+
+```
+{"uid":"de562f6a-3902-4f17-9b11-d4fe596a2fbf","title":"blah","order":0,"completed":true,"href":"https://todo-backend-sinatra.herokuapp.com/todos/de562f6a-3902-4f17-9b11-d4fe596a2fbf","url":"https://todo-backend-sinatra.herokuapp.com/todos/de562f6a-3902-4f17-9b11-d4fe596a2fbf"}
+```
+
+## Interaction 28: DELETE/todos
 
 ### Request headers recorded for playback:
 
@@ -1360,11 +1345,392 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo can change the todo's completedness by PATCHing to the todo's url
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 0
+Date: Sat, 19 Sep 2020 16:29:44 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+
+```
+
+### Response body recorded for playback (204: ):
+
+```
+
+```
+
+## Interaction 29: POST/todos
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Length: 16
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo changes to a todo are persisted and show up when re-fetching the todo
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+{"title":"blah"}
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 268
+Content-Type: text/html;charset=utf-8
+Date: Sat, 19 Sep 2020 16:29:44 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/ce27ee58-9cd5-415a-b320-9b2489d90e7e
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+
+```
+
+### Response body recorded for playback (201: text/html;charset=utf-8):
+
+```
+{"title":"blah","uid":"ce27ee58-9cd5-415a-b320-9b2489d90e7e","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/ce27ee58-9cd5-415a-b320-9b2489d90e7e","url":"https://todo-backend-sinatra.herokuapp.com/todos/ce27ee58-9cd5-415a-b320-9b2489d90e7e"}
+```
+
+## Interaction 30: PATCH/todos/ce27ee58-9cd5-415a-b320-9b2489d90e7e
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Length: 42
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo changes to a todo are persisted and show up when re-fetching the todo
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+{"title":"changed title","completed":true}
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 286
+Content-Type: text/html;charset=utf-8
+Date: Sat, 19 Sep 2020 16:29:44 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+
+```
+
+### Response body recorded for playback (200: text/html;charset=utf-8):
+
+```
+{"uid":"ce27ee58-9cd5-415a-b320-9b2489d90e7e","title":"changed title","order":0,"completed":true,"href":"https://todo-backend-sinatra.herokuapp.com/todos/ce27ee58-9cd5-415a-b320-9b2489d90e7e","url":"https://todo-backend-sinatra.herokuapp.com/todos/ce27ee58-9cd5-415a-b320-9b2489d90e7e"}
+```
+
+## Interaction 31: GET/todos/ce27ee58-9cd5-415a-b320-9b2489d90e7e
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo changes to a todo are persisted and show up when re-fetching the todo
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 286
+Content-Type: text/html;charset=utf-8
+Date: Sat, 19 Sep 2020 16:29:45 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+
+```
+
+### Response body recorded for playback (200: text/html;charset=utf-8):
+
+```
+{"uid":"ce27ee58-9cd5-415a-b320-9b2489d90e7e","title":"changed title","order":0,"completed":true,"href":"https://todo-backend-sinatra.herokuapp.com/todos/ce27ee58-9cd5-415a-b320-9b2489d90e7e","url":"https://todo-backend-sinatra.herokuapp.com/todos/ce27ee58-9cd5-415a-b320-9b2489d90e7e"}
+```
+
+## Interaction 32: GET/todos
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo changes to a todo are persisted and show up when re-fetching the todo
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 288
+Content-Type: text/html;charset=utf-8
+Date: Sat, 19 Sep 2020 16:29:45 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+
+```
+
+### Response body recorded for playback (200: text/html;charset=utf-8):
+
+```
+[{"uid":"ce27ee58-9cd5-415a-b320-9b2489d90e7e","title":"changed title","order":0,"completed":true,"href":"https://todo-backend-sinatra.herokuapp.com/todos/ce27ee58-9cd5-415a-b320-9b2489d90e7e","url":"https://todo-backend-sinatra.herokuapp.com/todos/ce27ee58-9cd5-415a-b320-9b2489d90e7e"}]
+```
+
+## Interaction 33: DELETE/todos
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo changes to a todo are persisted and show up when re-fetching the todo
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 0
+Date: Sat, 19 Sep 2020 16:29:45 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+
+```
+
+### Response body recorded for playback (204: ):
+
+```
+
+```
+
+## Interaction 34: POST/todos
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Length: 16
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo can delete a todo making a DELETE request to the todo's url
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+{"title":"blah"}
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 268
+Content-Type: text/html;charset=utf-8
+Date: Sat, 19 Sep 2020 16:29:46 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/bf78bd31-1a2f-40b6-9d29-e8ee3b262e86
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+
+```
+
+### Response body recorded for playback (201: text/html;charset=utf-8):
+
+```
+{"title":"blah","uid":"bf78bd31-1a2f-40b6-9d29-e8ee3b262e86","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/bf78bd31-1a2f-40b6-9d29-e8ee3b262e86","url":"https://todo-backend-sinatra.herokuapp.com/todos/bf78bd31-1a2f-40b6-9d29-e8ee3b262e86"}
+```
+
+## Interaction 35: DELETE/todos/bf78bd31-1a2f-40b6-9d29-e8ee3b262e86
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo can delete a todo making a DELETE request to the todo's url
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 0
+Date: Sat, 19 Sep 2020 16:29:46 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+
+```
+
+### Response body recorded for playback (204: ):
+
+```
+
+```
+
+## Interaction 36: GET/todos
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos working with an existing todo can delete a todo making a DELETE request to the todo's url
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -1382,7 +1748,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 2
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:39 GMT
+Date: Sat, 19 Sep 2020 16:29:46 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1391,13 +1757,13 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (200 OK:text/html;charset=utf-8):
+### Response body recorded for playback (200: text/html;charset=utf-8):
 
 ```
 []
 ```
 
-## Interaction 30: POST/todos
+## Interaction 37: POST/todos
 
 ### Request headers recorded for playback:
 
@@ -1408,11 +1774,12 @@ Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Length: 28
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos tracking todo order can create a todo with an order field
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -1430,8 +1797,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 280
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:39 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/840d2abe-b7a3-463d-9079-af871a7e353b
+Date: Sat, 19 Sep 2020 16:29:47 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/c43e5d1d-d35b-478f-bb4d-be4479da559e
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1440,13 +1807,13 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (201 Created:text/html;charset=utf-8):
+### Response body recorded for playback (201: text/html;charset=utf-8):
 
 ```
-{"title":"blah","order":523,"uid":"840d2abe-b7a3-463d-9079-af871a7e353b","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/840d2abe-b7a3-463d-9079-af871a7e353b","url":"https://todo-backend-sinatra.herokuapp.com/todos/840d2abe-b7a3-463d-9079-af871a7e353b"}
+{"title":"blah","order":523,"uid":"c43e5d1d-d35b-478f-bb4d-be4479da559e","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/c43e5d1d-d35b-478f-bb4d-be4479da559e","url":"https://todo-backend-sinatra.herokuapp.com/todos/c43e5d1d-d35b-478f-bb4d-be4479da559e"}
 ```
 
-## Interaction 31: POST/todos
+## Interaction 38: POST/todos
 
 ### Request headers recorded for playback:
 
@@ -1457,11 +1824,12 @@ Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Length: 27
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos tracking todo order can PATCH a todo to change its order
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -1479,8 +1847,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 279
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:39 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/db803c1d-0c97-4043-b358-a76e51b78d5e
+Date: Sat, 19 Sep 2020 16:29:47 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/022f9a49-09a5-4bff-821a-2cdcceedbfd5
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1489,13 +1857,62 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (201 Created:text/html;charset=utf-8):
+### Response body recorded for playback (201: text/html;charset=utf-8):
 
 ```
-{"order":10,"title":"blah","uid":"db803c1d-0c97-4043-b358-a76e51b78d5e","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/db803c1d-0c97-4043-b358-a76e51b78d5e","url":"https://todo-backend-sinatra.herokuapp.com/todos/db803c1d-0c97-4043-b358-a76e51b78d5e"}
+{"order":10,"title":"blah","uid":"022f9a49-09a5-4bff-821a-2cdcceedbfd5","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/022f9a49-09a5-4bff-821a-2cdcceedbfd5","url":"https://todo-backend-sinatra.herokuapp.com/todos/022f9a49-09a5-4bff-821a-2cdcceedbfd5"}
 ```
 
-## Interaction 32: POST/todos
+## Interaction 39: PATCH/todos/022f9a49-09a5-4bff-821a-2cdcceedbfd5
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Length: 12
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos tracking todo order can PATCH a todo to change its order
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+{"order":95}
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 279
+Content-Type: text/html;charset=utf-8
+Date: Sat, 19 Sep 2020 16:29:47 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+
+```
+
+### Response body recorded for playback (200: text/html;charset=utf-8):
+
+```
+{"uid":"022f9a49-09a5-4bff-821a-2cdcceedbfd5","title":"blah","order":95,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/022f9a49-09a5-4bff-821a-2cdcceedbfd5","url":"https://todo-backend-sinatra.herokuapp.com/todos/022f9a49-09a5-4bff-821a-2cdcceedbfd5"}
+```
+
+## Interaction 40: POST/todos
 
 ### Request headers recorded for playback:
 
@@ -1506,11 +1923,12 @@ Accept-Language: en-US,en;q=0.9
 Connection: keep-alive
 Content-Length: 27
 Content-Type: application/json
-Origin: https://www.todobackend.com
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos tracking todo order remembers changes to a todo's order
+Origin: https://servirtium.github.io
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
 
 ```
 
@@ -1528,8 +1946,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 279
 Content-Type: text/html;charset=utf-8
-Date: Wed, 26 Aug 2020 17:39:41 GMT
-Location: https://todo-backend-sinatra.herokuapp.com/todos/4b1327e8-03b1-4906-8d5a-461c224071b9
+Date: Sat, 19 Sep 2020 16:29:48 GMT
+Location: https://todo-backend-sinatra.herokuapp.com/todos/08b810e3-19b3-4322-af56-f4d8a458bc18
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1538,8 +1956,105 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-### Response body recorded for playback (201 Created:text/html;charset=utf-8):
+### Response body recorded for playback (201: text/html;charset=utf-8):
 
 ```
-{"order":10,"title":"blah","uid":"4b1327e8-03b1-4906-8d5a-461c224071b9","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/4b1327e8-03b1-4906-8d5a-461c224071b9","url":"https://todo-backend-sinatra.herokuapp.com/todos/4b1327e8-03b1-4906-8d5a-461c224071b9"}
+{"order":10,"title":"blah","uid":"08b810e3-19b3-4322-af56-f4d8a458bc18","completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/08b810e3-19b3-4322-af56-f4d8a458bc18","url":"https://todo-backend-sinatra.herokuapp.com/todos/08b810e3-19b3-4322-af56-f4d8a458bc18"}
+```
+
+## Interaction 41: PATCH/todos/08b810e3-19b3-4322-af56-f4d8a458bc18
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Length: 12
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at https://todo-backend-sinatra.herokuapp.com/todos tracking todo order remembers changes to a todo's order
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+{"order":95}
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 279
+Content-Type: text/html;charset=utf-8
+Date: Sat, 19 Sep 2020 16:29:48 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+
+```
+
+### Response body recorded for playback (200: text/html;charset=utf-8):
+
+```
+{"uid":"08b810e3-19b3-4322-af56-f4d8a458bc18","title":"blah","order":95,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/08b810e3-19b3-4322-af56-f4d8a458bc18","url":"https://todo-backend-sinatra.herokuapp.com/todos/08b810e3-19b3-4322-af56-f4d8a458bc18"}
+```
+
+## Interaction 42: GET/todos/08b810e3-19b3-4322-af56-f4d8a458bc18
+
+### Request headers recorded for playback:
+
+```
+Accept: text/plain, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Content-Type: application/json
+Fulltitle: Todo-Backend API residing at http://todo-backend-sinatra.herokuapp.com/todos tracking todo order remembers changes to a todo's order
+Origin: https://servirtium.github.io
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36
+
+```
+
+### Request body recorded for playback ():
+
+```
+
+```
+
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 279
+Content-Type: text/html;charset=utf-8
+Date: Sat, 19 Sep 2020 16:29:48 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+
+```
+
+### Response body recorded for playback (200: text/html;charset=utf-8):
+
+```
+{"uid":"08b810e3-19b3-4322-af56-f4d8a458bc18","title":"blah","order":95,"completed":false,"href":"https://todo-backend-sinatra.herokuapp.com/todos/08b810e3-19b3-4322-af56-f4d8a458bc18","url":"https://todo-backend-sinatra.herokuapp.com/todos/08b810e3-19b3-4322-af56-f4d8a458bc18"}
 ```
