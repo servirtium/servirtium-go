@@ -32,7 +32,7 @@ func (s *ServirtiumTestSuite) TestInitServerPlayback() {
 }
 
 func (s *ServirtiumTestSuite) TestAnualAvgHandlerPlayback() {
-	result := s.servirtium.anualAvgHandlerPlayback("mockName")
+	result := s.servirtium.playbackHandler("mockName")
 	s.NotNil(result)
 }
 
@@ -43,7 +43,7 @@ func (s *ServirtiumTestSuite) TestInitRecordServer() {
 }
 
 func (s *ServirtiumTestSuite) TestManInTheMiddleHandler() {
-	result := s.servirtium.manInTheMiddleHandler("https://google.com")
+	result := s.servirtium.recordHandler("https://google.com")
 	s.NotNil(result)
 }
 

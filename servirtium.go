@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 // Impl ...
@@ -43,24 +44,6 @@ func NewServirtium() *Impl {
 	}
 }
 
-func disableCors(h http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, DELETE, PATCH, PUT")
-		w.Header().Set("Access-Control-Allow-Headers", "Accept, Authorization, Content-Type, Content-Length, Accept-Encoding")
-
-		// I added this for another handler of mine,
-		// but I do not think this is necessary for GraphQL's handler
-		if r.Method == "OPTIONS" {
-			w.Header().Set("Access-Control-Max-Age", "86400")
-			w.WriteHeader(http.StatusOK)
-			return
-		}
-
-		h.ServeHTTP(w, r)
-	})
-}
-
 // StartPlayback ...
 func (s *Impl) StartPlayback(recordFileName string) {
 	s.initServerPlayback(recordFileName)
@@ -78,9 +61,9 @@ func (s *Impl) initServerPlayback(recordFileName string) {
 
 func (s *Impl) initServerPlaybackOnPort(recordFileName string, port int) {
 	r := mux.NewRouter()
-	r.PathPrefix("/").HandlerFunc(s.anualAvgHandlerPlayback(recordFileName))
+	r.PathPrefix("/").HandlerFunc(s.playbackHandler(recordFileName))
 	srv := &http.Server{
-		Handler: disableCors(r),
+		Handler: cors.Default().Handler(r),
 		Addr:    "127.0.0.1:" + strconv.Itoa(port),
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
@@ -132,7 +115,7 @@ func (s *Impl) getPlaybackResponse(data string) (string, map[string]string) {
 	return responseBody, headers
 }
 
-func (s *Impl) anualAvgHandlerPlayback(recordFileName string) func(w http.ResponseWriter, r *http.Request) {
+func (s *Impl) playbackHandler(recordFileName string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		workingPath, err := os.Getwd()
 		if err != nil {
@@ -189,9 +172,9 @@ func (s *Impl) initRecordServer(apiURL string) {
 
 func (s *Impl) initRecordServerOnPort(apiURL string, port int) {
 	r := mux.NewRouter()
-	r.PathPrefix("/").HandlerFunc(s.manInTheMiddleHandler(apiURL))
+	r.PathPrefix("/").HandlerFunc(s.recordHandler(apiURL))
 	srv := &http.Server{
-		Handler: disableCors(r),
+		Handler: cors.Default().Handler(r),
 		Addr:    "127.0.0.1:" + strconv.Itoa(port),
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
@@ -236,7 +219,7 @@ func maskBody(content string, maskItems map[*regexp.Regexp]string) string {
 	return newContent
 }
 
-func (s *Impl) manInTheMiddleHandler(apiURL string) func(w http.ResponseWriter, r *http.Request) {
+func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Clone Request Body
 		requestBody, err := ioutil.ReadAll(r.Body)

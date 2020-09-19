@@ -1,0 +1,1 @@
+cat mocks/todobackend_test_suite.md | sed 's#https:\/\/todo-backend-sinatra\.herokuapp\.com#http://localhost:61417#g' | sed 's#todo-backend-sinatra\.herokuapp\.com#localhost:61417#g' | sed 's#user-agent: .*#user-agent: Servirtium-Testing#' | sed '/^via: /d' | sed '/^server: /d' |  cat > mocks/todobackend_test_suite_with_replacements.md
