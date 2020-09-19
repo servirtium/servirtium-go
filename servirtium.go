@@ -2,50 +2,92 @@ package servirtium
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"regexp"
+	"strconv"
 	"strings"
 	"text/template"
+	"time"
+	"unicode/utf8"
+
+	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 // Impl ...
 type Impl struct {
-	ServerPlayback            IServerPlayback
-	ServerRecord              IServerRecord
-	requestSequence           int64
-	content                   string
-	requestHeadersNeedDelete  []string
-	requestHeadersNeedReplace map[string]string
-	requestHeadersNeedMask    map[string]string
-	requestBodyNeedMask       map[*regexp.Regexp]string
-	responseHeadersNeedDelete []string
-	responseHeaderNeedReplace map[string]string
-	responseHeadersNeedMask   map[string]string
-	responseBodyNeedMask      map[*regexp.Regexp]string
+	ServerPlayback  *http.Server
+	ServerRecord    *http.Server
+	requestSequence int64
+	content         string
+	// caller request
+	callerRequestHeadersRemoval     []string
+	callerRequestHeaderReplacements map[*regexp.Regexp]string
+	callerRequestBodyReplacement    map[*regexp.Regexp]string
+	// record request
+	recordRequestHeadersRemoval     []string
+	recordRequestHeaderReplacements map[*regexp.Regexp]string
+	recordRequestBodyReplacement    map[*regexp.Regexp]string
+	// caller response
+	callerResponseHeadersRemoval     []string
+	callerResponseHeaderReplacements map[*regexp.Regexp]string
+	callerResponseBodyReplacement    map[*regexp.Regexp]string
+	// record response
+	recordResponseHeadersRemoval     []string
+	recordResponseHeaderReplacements map[*regexp.Regexp]string
+	recordResponseBodyReplacement    map[*regexp.Regexp]string
 }
 
 // NewServirtium ...
 func NewServirtium() *Impl {
 	return &Impl{
-		requestSequence:           0,
-		content:                   "",
-		requestHeadersNeedDelete:  []string{},
-		responseHeadersNeedDelete: []string{},
+		requestSequence:              0,
+		content:                      "",
+		callerRequestHeadersRemoval:  []string{},
+		recordRequestHeadersRemoval:  []string{},
+		callerResponseHeadersRemoval: []string{},
+		recordResponseHeadersRemoval: []string{},
 	}
 }
 
 // StartPlayback ...
-func (s *Impl) StartPlayback() {
-	s.ServerPlayback.Start()
+func (s *Impl) StartPlayback(recordFileName string) {
+	s.initServerPlayback(recordFileName)
+	log.Fatal(s.ServerPlayback.ListenAndServe())
 }
 
 // EndPlayback ...
 func (s *Impl) EndPlayback() {
-	s.ServerPlayback.Close()
+	s.ServerPlayback.Shutdown(context.TODO())
+}
+
+func (s *Impl) initServerPlayback(recordFileName string) {
+	s.initServerPlaybackOnPort(recordFileName, 61417)
+}
+
+func (s *Impl) initServerPlaybackOnPort(recordFileName string, port int) {
+	r := mux.NewRouter()
+	r.PathPrefix("/").HandlerFunc(s.playbackHandler(recordFileName))
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"},
+		AllowedHeaders:   []string{"*"},
+		AllowCredentials: true,
+		Debug:            false,
+	})
+	srv := &http.Server{
+		Handler: c.Handler(r),
+		Addr:    "127.0.0.1:" + strconv.Itoa(port),
+		// Good practice: enforce timeouts for servers you create!
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+	s.ServerPlayback = srv
 }
 
 func (s *Impl) getInteraction(data string) string {
@@ -74,39 +116,61 @@ func (s *Impl) parseHeaders(content string) map[string]string {
 
 func (s *Impl) getPlaybackResponse(data string) (string, map[string]string) {
 	var (
-		headers      map[string]string
-		responseBody string
-		sections     = strings.Split(data, "\n### ")
+		responseHeaders map[string]string
+		responseBody    string
+		sections        = strings.Split(data, "\n### ")
 	)
 	for _, v := range sections {
 		if strings.HasPrefix(v, "Response headers recorded for playback") {
 			headerContent := strings.Split(v, "```")[1]
-			headers = s.parseHeaders(headerContent)
+			responseHeaders = s.parseHeaders(headerContent)
 		}
 		if strings.HasPrefix(v, "Response body recorded for playback") {
 			responseBody = strings.Split(v, "```")[1]
-			headers["content-length"] = fmt.Sprintf("%d", len(responseBody))
+			responseHeaders["content-length"] = fmt.Sprintf("%d", len(responseBody))
 		}
 	}
-	return responseBody, headers
+	return responseBody, responseHeaders
 }
 
-// AnualAvgHandlerPlayback ...
-func (s *Impl) AnualAvgHandlerPlayback(recordFileName string) func(w http.ResponseWriter, r *http.Request) {
+func removeHeadersPlayback(headers map[string]string, deleteItems []string) map[string]string {
+	for _, v := range deleteItems {
+		delete(headers, v)
+	}
+	return headers
+}
+
+func replaceHeadersPlayback(headers map[string]string, replaceItems map[*regexp.Regexp]string) map[string]string {
+	for regex, replaceValue := range replaceItems {
+		for k, v := range headers {
+			line := fmt.Sprintf("%s: %s", k, v)
+			line1 := regex.ReplaceAllString(line, replaceValue)
+			if line1 != line {
+				headerReplacedValue := strings.Split(line1, ": ")[1]
+				headers[k] = headerReplacedValue
+			}
+		}
+	}
+	return headers
+}
+
+func (s *Impl) playbackHandler(recordFileName string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		workingPath, err := os.Getwd()
 		if err != nil {
 			log.Fatal(err)
 		}
 		data, err := ioutil.ReadFile(fmt.Sprintf("%s/mock/%s.md", workingPath, recordFileName))
-		interaction := s.getInteraction(string(data))
-		body, headers := s.getPlaybackResponse(interaction)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			_, _ = w.Write([]byte("Internal Server Error"))
 			return
 		}
-		for k, v := range headers {
+		interaction := s.getInteraction(string(data))
+		body, headers := s.getPlaybackResponse(interaction)
+		callerResponseHeaders := removeHeadersPlayback(headers, s.callerResponseHeadersRemoval)
+		callerResponseHeaders = replaceHeadersPlayback(callerResponseHeaders, s.callerResponseHeaderReplacements)
+		for k, v := range callerResponseHeaders {
 			w.Header().Set(k, v)
 		}
 		w.WriteHeader(http.StatusOK)
@@ -116,8 +180,9 @@ func (s *Impl) AnualAvgHandlerPlayback(recordFileName string) func(w http.Respon
 }
 
 // StartRecord ...
-func (s *Impl) StartRecord() {
-	s.ServerRecord.Start()
+func (s *Impl) StartRecord(apiURL string) {
+	s.initRecordServer(apiURL)
+	log.Fatal(s.ServerRecord.ListenAndServe())
 }
 
 // WriteRecord ...
@@ -139,7 +204,31 @@ func (s *Impl) WriteRecord(recordFileName string) {
 
 // EndRecord ...
 func (s *Impl) EndRecord() {
-	s.ServerRecord.Close()
+	s.ServerRecord.Shutdown(context.TODO())
+}
+
+func (s *Impl) initRecordServer(apiURL string) {
+	s.initRecordServerOnPort(apiURL, 61417)
+}
+
+func (s *Impl) initRecordServerOnPort(apiURL string, port int) {
+	r := mux.NewRouter()
+	r.PathPrefix("/").HandlerFunc(s.recordHandler(apiURL))
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"},
+		AllowedHeaders:   []string{"*"},
+		AllowCredentials: true,
+		Debug:            false,
+	})
+	srv := &http.Server{
+		Handler: c.Handler(r),
+		Addr:    "127.0.0.1:" + strconv.Itoa(port),
+		// Good practice: enforce timeouts for servers you create!
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+	s.ServerRecord = srv
 }
 
 type recordData struct {
@@ -154,77 +243,105 @@ type recordData struct {
 	ResponseContentType string
 }
 
-func removeHeader(header http.Header, deleteItems []string) http.Header {
+func removeHeaders(header http.Header, deleteItems []string) http.Header {
 	for _, v := range deleteItems {
 		header.Del(v)
 	}
 	return header
 }
 
-func replaceHeader(header http.Header, replaceItems map[string]string) http.Header {
-	for k, v := range replaceItems {
-		if _, isFound := header[k]; isFound {
-			header.Set(k, v)
+func replaceHeaders(headers http.Header, replaceItems map[*regexp.Regexp]string) http.Header {
+	for regex, replaceValue := range replaceItems {
+		for k, v := range headers {
+			headerValue := strings.Join(v, ",")
+			line := fmt.Sprintf("%s: %s", k, headerValue)
+			line1 := regex.ReplaceAllString(line, replaceValue)
+			if line1 != line {
+				headerReplacedValue := strings.Split(line1, ": ")[1]
+				headers.Set(k, headerReplacedValue)
+			}
 		}
 	}
-	return header
+	return headers
 }
 
-func maskBody(content string, maskItems map[*regexp.Regexp]string) string {
+func replaceContent(content string, maskItems map[*regexp.Regexp]string) string {
 	newContent := content
 	for k, v := range maskItems {
-		newContent = k.ReplaceAllString(content, v)
+		newContent = k.ReplaceAllString(newContent, v)
 	}
 	return newContent
 }
 
-// ManInTheMiddleHandler ...
-func (s *Impl) ManInTheMiddleHandler(apiURL string) func(w http.ResponseWriter, r *http.Request) {
+func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Clone Request Body
+		// Clone request body
 		requestBody, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		r.Body = ioutil.NopCloser(bytes.NewReader(requestBody))
 		url := fmt.Sprintf("%s%s", apiURL, r.RequestURI)
-		proxyRequest, err := http.NewRequest(r.Method, url, bytes.NewReader(requestBody))
-		// Modify request headers
-		proxyRequest.Header = replaceHeader(r.Header, s.requestHeadersNeedReplace)
-		proxyRequest.Header = removeHeader(proxyRequest.Header, s.requestHeadersNeedDelete)
+
+		// Mutate caller request headers and body
+		proxyRequestBody := replaceContent(string(requestBody), s.callerRequestBodyReplacement)
+		newCallerProxyRequestHeader := removeHeaders(r.Header, s.callerRequestHeadersRemoval)
+		newCallerProxyRequestHeader = replaceHeaders(newCallerProxyRequestHeader, s.callerRequestHeaderReplacements)
+		if newCallerProxyRequestHeader.Get("Content-Length") != "" {
+			newCallerProxyRequestHeader.Set("Content-Length", fmt.Sprintf("%d", utf8.RuneCountInString(proxyRequestBody)))
+		}
+
+		// Make a request
+		proxyRequest, err := http.NewRequest(r.Method, url, bytes.NewReader([]byte(proxyRequestBody)))
+		proxyRequest.Header = newCallerProxyRequestHeader
 		response, err := http.DefaultClient.Do(proxyRequest)
-		// Clone response
+
+		// Clone response body
 		responseBody, err := ioutil.ReadAll(response.Body)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		// Modify Request Header before write
-		newRequestHeader := replaceHeader(proxyRequest.Header, s.requestHeadersNeedMask)
-		maskedRequestBody := maskBody(string(requestBody), s.requestBodyNeedMask)
 
-		// Modify Response Header before write
-		newResponseHeader := replaceHeader(response.Header, s.responseHeaderNeedReplace)
-		removedResponseHeader := removeHeader(newResponseHeader, s.responseHeadersNeedDelete)
-		maskedResponseHeader := replaceHeader(removedResponseHeader, s.responseHeadersNeedMask)
-		maskedResponseBody := maskBody(string(responseBody), s.responseBodyNeedMask)
+		// Mutate record request headers and body
+		newRecordRequestBody := replaceContent(proxyRequestBody, s.recordRequestBodyReplacement)
+		newRecordRequestHeaders := removeHeaders(proxyRequest.Header, s.recordRequestHeadersRemoval)
+		newRecordRequestHeaders = replaceHeaders(newRecordRequestHeaders, s.recordRequestHeaderReplacements)
+
+		// Modify record response headers and body
+		newRecordResponseBody := replaceContent(string(responseBody), s.recordResponseBodyReplacement)
+		newRecordResponseHeaders := removeHeaders(response.Header, s.recordResponseHeadersRemoval)
+		newRecordResponseHeaders = replaceHeaders(newRecordResponseHeaders, s.recordResponseHeaderReplacements)
 
 		s.record(recordData{
 			RequestURLPath:      r.URL.Path,
 			RequestMethod:       r.Method,
-			RequestHeader:       newRequestHeader,
-			RequestBody:         maskedRequestBody,
-			ResponseHeader:      maskedResponseHeader,
-			ResponseBody:        maskedResponseBody,
+			RequestHeader:       newRecordRequestHeaders,
+			RequestBody:         newRecordRequestBody,
+			ResponseHeader:      newRecordResponseHeaders,
+			ResponseBody:        newRecordResponseBody,
 			ResponseContentType: response.Header.Get("Content-Type"),
 			ResponseStatus:      response.Status,
 		})
-		response.Body = ioutil.NopCloser(bytes.NewBuffer(responseBody))
+
+		// Mutate caller response headers and body
+		newCallerResponseBody := replaceContent(newRecordResponseBody, s.callerResponseBodyReplacement)
+		newCallerResponseHeaders := removeHeaders(newRecordResponseHeaders, s.recordResponseHeadersRemoval)
+		newCallerResponseHeaders = replaceHeaders(newCallerResponseHeaders, s.callerResponseHeaderReplacements)
+
+		// response.Body = ioutil.NopCloser(bytes.NewBuffer([]byte(newCallerResponseBody)))
 		defer func() {
 			_ = response.Body.Close()
 		}()
-		w.Write(responseBody)
+		for k, v := range newCallerResponseHeaders {
+			responseHeaderValue := strings.Join(v, ",")
+			w.Header().Set(k, responseHeaderValue)
+		}
+		if response.Header.Get("Content-Length") != "" {
+			w.Header().Set("Content-Length", fmt.Sprintf("%d", utf8.RuneCountInString(newCallerResponseBody)))
+		}
+		w.WriteHeader(response.StatusCode)
+		w.Write([]byte(newCallerResponseBody))
 	}
 }
 
@@ -278,64 +395,62 @@ func (s *Impl) record(params recordData) {
 	s.requestSequence = s.requestSequence + 1
 }
 
-// CheckMarkdownIsDifferentToPreviousRecording ...
-func (s *Impl) CheckMarkdownIsDifferentToPreviousRecording(recordFileName string) bool {
-	workingPath, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-	filePath := fmt.Sprintf("%s/mock/%s.md", workingPath, recordFileName)
-	fileContent, err := ioutil.ReadFile(filePath)
-	isCanReadFile := err == nil
-	if !isCanReadFile {
-		return true
-	}
-	newContent := maskBody(s.content, s.requestBodyNeedMask)
-	newContent = maskBody(newContent, s.requestBodyNeedMask)
-
-	return newContent == string(fileContent)
+// SetCallerRequestHeadersRemoval ...
+func (s *Impl) SetCallerRequestHeadersRemoval(headers []string) {
+	s.callerRequestHeadersRemoval = headers
 }
 
-// DeleteRequestHeaders ...
-func (s *Impl) DeleteRequestHeaders(headers []string) {
-	for _, v := range headers {
-		s.requestHeadersNeedDelete = append(s.requestHeadersNeedDelete, v)
-	}
+// SetCallerRequestHeaderReplacements ...
+func (s *Impl) SetCallerRequestHeaderReplacements(replaceRegex map[*regexp.Regexp]string) {
+	s.callerRequestHeaderReplacements = replaceRegex
 }
 
-// MaskRequestHeaders ...
-func (s *Impl) MaskRequestHeaders(headers map[string]string) {
-	s.requestHeadersNeedMask = headers
+// SetCallerRequestBodyReplacement ...
+func (s *Impl) SetCallerRequestBodyReplacement(replaceRegex map[*regexp.Regexp]string) {
+	s.callerRequestBodyReplacement = replaceRegex
 }
 
-// ReplaceRequestHeaders ...
-func (s *Impl) ReplaceRequestHeaders(headers map[string]string) {
-	s.requestHeadersNeedReplace = headers
+// SetRecordRequestHeadersRemoval ...
+func (s *Impl) SetRecordRequestHeadersRemoval(headers []string) {
+	s.recordRequestHeadersRemoval = headers
 }
 
-// MaskRequestBody ...
-func (s *Impl) MaskRequestBody(replaceRegex map[*regexp.Regexp]string) {
-	s.requestBodyNeedMask = replaceRegex
+// SetRecordRequestHeaderReplacements ...
+func (s *Impl) SetRecordRequestHeaderReplacements(replaceRegex map[*regexp.Regexp]string) {
+	s.recordRequestHeaderReplacements = replaceRegex
 }
 
-// DeleteResponseHeaders ...
-func (s *Impl) DeleteResponseHeaders(headers []string) {
-	for _, v := range headers {
-		s.responseHeadersNeedDelete = append(s.responseHeadersNeedDelete, v)
-	}
+// SetRecordRequestBodyReplacement ...
+func (s *Impl) SetRecordRequestBodyReplacement(replaceRegex map[*regexp.Regexp]string) {
+	s.recordRequestBodyReplacement = replaceRegex
 }
 
-// MaskResponseHeaders ...
-func (s *Impl) MaskResponseHeaders(headers map[string]string) {
-	s.responseHeadersNeedMask = headers
+// SetCallerResponseHeadersRemoval ...
+func (s *Impl) SetCallerResponseHeadersRemoval(headers []string) {
+	s.callerResponseHeadersRemoval = headers
 }
 
-// ReplaceResponseHeaders ...
-func (s *Impl) ReplaceResponseHeaders(headers map[string]string) {
-	s.responseHeaderNeedReplace = headers
+// SetCallerResponseHeaderReplacements ...
+func (s *Impl) SetCallerResponseHeaderReplacements(replaceRegex map[*regexp.Regexp]string) {
+	s.callerResponseHeaderReplacements = replaceRegex
 }
 
-// MaskResponseBody ...
-func (s *Impl) MaskResponseBody(replaceRegex map[*regexp.Regexp]string) {
-	s.responseBodyNeedMask = replaceRegex
+// SetCallerResponseBodyReplacement ...
+func (s *Impl) SetCallerResponseBodyReplacement(replaceRegex map[*regexp.Regexp]string) {
+	s.callerResponseBodyReplacement = replaceRegex
+}
+
+// SetRecordResponseHeadersRemoval ...
+func (s *Impl) SetRecordResponseHeadersRemoval(headers []string) {
+	s.recordResponseHeadersRemoval = headers
+}
+
+// SetRecordResponseHeaderReplacements ...
+func (s *Impl) SetRecordResponseHeaderReplacements(replaceRegex map[*regexp.Regexp]string) {
+	s.recordResponseHeaderReplacements = replaceRegex
+}
+
+// SetRecordResponseBodyReplacement ...
+func (s *Impl) SetRecordResponseBodyReplacement(replaceRegex map[*regexp.Regexp]string) {
+	s.recordResponseBodyReplacement = replaceRegex
 }

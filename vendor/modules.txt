@@ -5,11 +5,11 @@ github.com/davecgh/go-spew/spew
 github.com/gorilla/mux
 # github.com/kr/pretty v0.2.1
 ## explicit
-github.com/kr/pretty
-# github.com/kr/text v0.1.0
-github.com/kr/text
 # github.com/pmezard/go-difflib v1.0.0
 github.com/pmezard/go-difflib/difflib
+# github.com/rs/cors v1.7.0
+## explicit
+github.com/rs/cors
 # github.com/stretchr/testify v1.6.1
 ## explicit
 github.com/stretchr/testify/assert

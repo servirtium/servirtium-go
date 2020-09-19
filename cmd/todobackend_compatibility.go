@@ -4,9 +4,10 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"regexp"
 	"syscall"
 
-	servirtiumPackage "github.com/servirtium/servirtium-go"
+	"github.com/servirtium/servirtium-go"
 )
 
 func main() {
@@ -14,7 +15,7 @@ func main() {
 	signal.Notify(sigc,
 		syscall.SIGTERM,
 	)
-	servirtium := servirtiumPackage.NewServirtium()
+	servirtium := servirtium.NewServirtium()
 	argsWithoutProg := os.Args[1:]
 	switch argsWithoutProg[0] {
 	case "record":
@@ -23,18 +24,41 @@ func main() {
 			servirtium.WriteRecord("todobackend_test_suite")
 			servirtium.EndRecord()
 		}()
-		serverRecord := servirtiumPackage.NewServerRecord(servirtium.ManInTheMiddleHandler("https://todo-backend-sinatra.herokuapp.com"), 61417)
-		servirtium.ServerRecord = serverRecord
-		servirtium.StartRecord()
+		servirtium.SetCallerRequestHeaderReplacements(map[*regexp.Regexp]string{
+			regexp.MustCompile("http://localhost:61417"): "https://todo-backend-sinatra.herokuapp.com",
+			regexp.MustCompile("localhost:61417"):        "todo-backend-sinatra.herokuapp.com",
+		})
+		servirtium.SetCallerResponseHeaderReplacements(map[*regexp.Regexp]string{
+			regexp.MustCompile("https://todo-backend-sinatra.herokuapp.com"): "http://localhost:61417",
+			regexp.MustCompile("todo-backend-sinatra.herokuapp.com"):         "localhost:61417",
+		})
+		servirtium.SetCallerResponseBodyReplacement(map[*regexp.Regexp]string{
+			regexp.MustCompile("https://todo-backend-sinatra.herokuapp.com"): "http://localhost:61417",
+			regexp.MustCompile("todo-backend-sinatra.herokuapp.com"):         "localhost:61417",
+			regexp.MustCompile("https"):                                      "http",
+		})
+		servirtium.StartRecord("https://todo-backend-sinatra.herokuapp.com")
 		break
 	case "playback":
 		go func() {
 			<-sigc
 			servirtium.EndPlayback()
 		}()
-		serverPlayback := servirtiumPackage.NewServerPlayback(servirtium.AnualAvgHandlerPlayback("todobackend_test_suite"), 61417)
-		servirtium.ServerPlayback = serverPlayback
-		servirtium.StartPlayback()
+		servirtium.SetCallerRequestHeaderReplacements(map[*regexp.Regexp]string{
+			regexp.MustCompile("http://localhost:61417"): "https://todo-backend-sinatra.herokuapp.com",
+			regexp.MustCompile("localhost:61417"):        "todo-backend-sinatra.herokuapp.com",
+		})
+		regexp.MustCompile("https")
+		servirtium.SetCallerResponseHeaderReplacements(map[*regexp.Regexp]string{
+			regexp.MustCompile("https://todo-backend-sinatra.herokuapp.com"): "http://localhost:61417",
+			regexp.MustCompile("todo-backend-sinatra.herokuapp.com"):         "localhost:61417",
+		})
+		servirtium.SetCallerResponseBodyReplacement(map[*regexp.Regexp]string{
+			regexp.MustCompile("https://todo-backend-sinatra.herokuapp.com"): "http://localhost:61417",
+			regexp.MustCompile("todo-backend-sinatra.herokuapp.com"):         "localhost:61417",
+			regexp.MustCompile("https"):                                      "http",
+		})
+		servirtium.StartPlayback("todobackend_test_suite")
 		break
 	default:
 		log.Fatal("Oops, should have been record or playback")
