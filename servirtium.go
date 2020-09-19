@@ -13,6 +13,7 @@ import (
 	"strings"
 	"text/template"
 	"time"
+	"unicode/utf8"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
@@ -72,8 +73,15 @@ func (s *Impl) initServerPlayback(recordFileName string) {
 func (s *Impl) initServerPlaybackOnPort(recordFileName string, port int) {
 	r := mux.NewRouter()
 	r.PathPrefix("/").HandlerFunc(s.playbackHandler(recordFileName))
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"},
+		AllowedHeaders:   []string{"*"},
+		AllowCredentials: true,
+		Debug:            false,
+	})
 	srv := &http.Server{
-		Handler: cors.Default().Handler(r),
+		Handler: c.Handler(r),
 		Addr:    "127.0.0.1:" + strconv.Itoa(port),
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
@@ -206,8 +214,15 @@ func (s *Impl) initRecordServer(apiURL string) {
 func (s *Impl) initRecordServerOnPort(apiURL string, port int) {
 	r := mux.NewRouter()
 	r.PathPrefix("/").HandlerFunc(s.recordHandler(apiURL))
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"},
+		AllowedHeaders:   []string{"*"},
+		AllowCredentials: true,
+		Debug:            false,
+	})
 	srv := &http.Server{
-		Handler: cors.Default().Handler(r),
+		Handler: c.Handler(r),
 		Addr:    "127.0.0.1:" + strconv.Itoa(port),
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
@@ -253,7 +268,7 @@ func replaceHeaders(headers http.Header, replaceItems map[*regexp.Regexp]string)
 func replaceContent(content string, maskItems map[*regexp.Regexp]string) string {
 	newContent := content
 	for k, v := range maskItems {
-		newContent = k.ReplaceAllString(content, v)
+		newContent = k.ReplaceAllString(newContent, v)
 	}
 	return newContent
 }
@@ -272,6 +287,9 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 		proxyRequestBody := replaceContent(string(requestBody), s.callerRequestBodyReplacement)
 		newCallerProxyRequestHeader := removeHeaders(r.Header, s.callerRequestHeadersRemoval)
 		newCallerProxyRequestHeader = replaceHeaders(newCallerProxyRequestHeader, s.callerRequestHeaderReplacements)
+		if newCallerProxyRequestHeader.Get("Content-Length") != "" {
+			newCallerProxyRequestHeader.Set("Content-Length", fmt.Sprintf("%d", utf8.RuneCountInString(proxyRequestBody)))
+		}
 
 		// Make a request
 		proxyRequest, err := http.NewRequest(r.Method, url, bytes.NewReader([]byte(proxyRequestBody)))
@@ -312,13 +330,17 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 		newCallerResponseHeaders = replaceHeaders(newCallerResponseHeaders, s.callerResponseHeaderReplacements)
 
 		// response.Body = ioutil.NopCloser(bytes.NewBuffer([]byte(newCallerResponseBody)))
-		// defer func() {
-		// 	_ = response.Body.Close()
-		// }()
+		defer func() {
+			_ = response.Body.Close()
+		}()
 		for k, v := range newCallerResponseHeaders {
 			responseHeaderValue := strings.Join(v, ",")
 			w.Header().Set(k, responseHeaderValue)
 		}
+		if response.Header.Get("Content-Length") != "" {
+			w.Header().Set("Content-Length", fmt.Sprintf("%d", utf8.RuneCountInString(newCallerResponseBody)))
+		}
+		w.WriteHeader(response.StatusCode)
 		w.Write([]byte(newCallerResponseBody))
 	}
 }
