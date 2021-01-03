@@ -1,0 +1,6 @@
+version: '2'
+
+services:
+  svt:
+    build: .
+    image: servirtium-go-standalone-server
