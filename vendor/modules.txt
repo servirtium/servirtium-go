@@ -1,13 +1,11 @@
 # github.com/davecgh/go-spew v1.1.0
 github.com/davecgh/go-spew/spew
-# github.com/gorilla/mux v1.7.4
+# github.com/gorilla/mux v1.8.0
 ## explicit
 github.com/gorilla/mux
-# github.com/kr/pretty v0.2.1
-## explicit
 # github.com/pmezard/go-difflib v1.0.0
 github.com/pmezard/go-difflib/difflib
-# github.com/rs/cors v1.7.0
+# github.com/rs/cors v1.8.2
 ## explicit
 github.com/rs/cors
 # github.com/stretchr/testify v1.6.1
