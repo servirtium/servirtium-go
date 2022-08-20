@@ -36,7 +36,7 @@ if len(sys.argv) > 2:
        # Running via 'python -m SimpleHTTPServer 8000' in a different shell
        todoSuiteUrl = "http://localhost:8000/index.html"
 
-driver = webdriver.Chrome("/usr/local/bin/chromedriver")
+driver = webdriver.Chrome("chromedriver")
 
 time.sleep(5) # for old workstations
 
