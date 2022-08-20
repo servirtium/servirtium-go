@@ -1,2 +1,4 @@
 .env
 compatibility_suite_mock_replacements.sh
+.idea
+vendor
