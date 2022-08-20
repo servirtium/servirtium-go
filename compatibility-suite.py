@@ -9,17 +9,17 @@ from selenium.webdriver.support import expected_conditions as EC
 import subprocess
 import time
 
-node_process = None
+servirtium_process = None
 todoSuiteUrl = "https://servirtium.github.io/compatibility-suite/index.html"
 
 if len(sys.argv) > 1:
    if sys.argv[1] == "record":
        # TODO check that node process is already started.
        url = "http://localhost:61417"
-       node_process = subprocess.Popen(["go", "run", "./cmd/todobackend_compatibility.go", "record"])
+       servirtium_process = subprocess.Popen(["go", "run", "./cmd/todobackend_compatibility.go", "record"])
    elif sys.argv[1] == "playback":
        url = "http://localhost:61417"
-       node_process = subprocess.Popen(["go", "run", "./cmd/todobackend_compatibility.go", "playback"])
+       servirtium_process = subprocess.Popen(["go", "run", "./cmd/todobackend_compatibility.go", "playback"])
    elif sys.argv[1] == "direct":
        print("showing reference Sinatra app online without Servirtium in the middle")
        todoSuiteUrl = "https://www.todobackend.com/specs/index.html"
@@ -54,10 +54,10 @@ except TimeoutException as ex:
 
 print("mode: " + sys.argv[1])
 
-if node_process is not None:
-    print("Killing Node")
-    os.killpg(os.getpgid(node_process.pid), signal.SIGTERM)
-    node_process.kill()
+if servirtium_process is not None:
+    print("Killing servirtium process")
+    os.killpg(os.getpgid(servirtium_process.pid), signal.SIGTERM)
+    servirtium_process.kill()
 
 print("Closing Selenium")
 driver.quit()
