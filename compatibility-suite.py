@@ -13,7 +13,10 @@ servirtium_process = None
 todoSuiteUrl = "https://servirtium.github.io/compatibility-suite/index.html"
 
 if len(sys.argv) > 1:
+
    if sys.argv[1] == "record":
+       docker_todoackend = subprocess.Popen(["docker", "build", "https://github.com/servirtium/todobackend.git", "-t", "servirtium/todobackend"])
+       docker_todoackend = subprocess.Popen(["docker", "build", "https://github.com/servirtium/todobackend.git", "-t", "servirtium/todobackend"])
        # TODO check that node process is already started.
        url = "http://localhost:61417"
        servirtium_process = subprocess.Popen(["go", "run", "./cmd/todobackend_compatibility.go", "record"])
@@ -21,9 +24,9 @@ if len(sys.argv) > 1:
        url = "http://localhost:61417"
        servirtium_process = subprocess.Popen(["go", "run", "./cmd/todobackend_compatibility.go", "playback"])
    elif sys.argv[1] == "direct":
-       print("showing reference Sinatra app online without Servirtium in the middle")
+       print("showing Http4k Todobackend implementation online without Servirtium in the middle")
        todoSuiteUrl = "https://www.todobackend.com/specs/index.html"
-       url = "https://todo-backend-sinatra.herokuapp.com"
+       url = "https://http4k-todo-backend.herokuapp.com/"
    else:
        print("Second arg should be record or playback")
        exit(10)

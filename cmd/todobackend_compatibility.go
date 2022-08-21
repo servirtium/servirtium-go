@@ -25,19 +25,19 @@ func main() {
 			servirtium.EndRecord()
 		}()
 		servirtium.SetCallerRequestHeaderReplacements(map[*regexp.Regexp]string{
-			regexp.MustCompile("http://localhost:61417"): "https://todo-backend-sinatra.herokuapp.com",
-			regexp.MustCompile("localhost:61417"):        "todo-backend-sinatra.herokuapp.com",
+			regexp.MustCompile("http://localhost:61417"): "https://http4k-todo-backend.herokuapp.com/",
+			regexp.MustCompile("localhost:61417"):        "http4k-todo-backend.herokuapp.com/",
 		})
 		servirtium.SetCallerResponseHeaderReplacements(map[*regexp.Regexp]string{
-			regexp.MustCompile("https://todo-backend-sinatra.herokuapp.com"): "http://localhost:61417",
-			regexp.MustCompile("todo-backend-sinatra.herokuapp.com"):         "localhost:61417",
+			regexp.MustCompile("https://http4k-todo-backend.herokuapp.com/"): "http://localhost:61417",
+			regexp.MustCompile("http4k-todo-backend.herokuapp.com/"):         "localhost:61417",
 		})
 		servirtium.SetCallerResponseBodyReplacement(map[*regexp.Regexp]string{
-			regexp.MustCompile("https://todo-backend-sinatra.herokuapp.com"): "http://localhost:61417",
-			regexp.MustCompile("todo-backend-sinatra.herokuapp.com"):         "localhost:61417",
+			regexp.MustCompile("https://http4k-todo-backend.herokuapp.com/"): "http://localhost:61417",
+			regexp.MustCompile("http4k-todo-backend.herokuapp.com/"):         "localhost:61417",
 			regexp.MustCompile("https"):                                      "http",
 		})
-		servirtium.StartRecord("https://todo-backend-sinatra.herokuapp.com")
+		servirtium.StartRecord("http4k-todo-backend.herokuapp.com/")
 		break
 	case "playback":
 		go func() {
@@ -45,16 +45,16 @@ func main() {
 			servirtium.EndPlayback()
 		}()
 		servirtium.SetCallerRequestHeaderReplacements(map[*regexp.Regexp]string{
-			regexp.MustCompile("http://localhost:61417"): "https://todo-backend-sinatra.herokuapp.com",
-			regexp.MustCompile("localhost:61417"):        "todo-backend-sinatra.herokuapp.com",
+			regexp.MustCompile("http://localhost:61417"): "https://http4k-todo-backend.herokuapp.com/",
+			regexp.MustCompile("localhost:61417"):        "http4k-todo-backend.herokuapp.com/",
 		})
 		servirtium.SetCallerResponseHeaderReplacements(map[*regexp.Regexp]string{
-			regexp.MustCompile("https://todo-backend-sinatra.herokuapp.com"): "http://localhost:61417",
-			regexp.MustCompile("todo-backend-sinatra.herokuapp.com"):         "localhost:61417",
+			regexp.MustCompile("https://http4k-todo-backend.herokuapp.com/"): "http://localhost:61417",
+			regexp.MustCompile("http4k-todo-backend.herokuapp.com/"):         "localhost:61417",
 		})
 		servirtium.SetCallerResponseBodyReplacement(map[*regexp.Regexp]string{
-			regexp.MustCompile("https://todo-backend-sinatra.herokuapp.com"): "http://localhost:61417",
-			regexp.MustCompile("todo-backend-sinatra.herokuapp.com"):         "localhost:61417",
+			regexp.MustCompile("https://http4k-todo-backend.herokuapp.com/"): "http://localhost:61417",
+			regexp.MustCompile("http4k-todo-backend.herokuapp.com/"):         "localhost:61417",
 			regexp.MustCompile("https"):                                      "http",
 		})
 		servirtium.StartPlayback("todobackend_test_suite")
