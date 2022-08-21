@@ -14,19 +14,19 @@ todoSuiteUrl = "https://servirtium.github.io/compatibility-suite/index.html"
 
 if len(sys.argv) > 1:
 
+   realUrl = "https://http4k-todo-backend.herokuapp.com/"
+
    if sys.argv[1] == "record":
-       docker_todoackend = subprocess.Popen(["docker", "build", "https://github.com/servirtium/todobackend.git", "-t", "servirtium/todobackend"])
-       docker_todoackend = subprocess.Popen(["docker", "build", "https://github.com/servirtium/todobackend.git", "-t", "servirtium/todobackend"])
        # TODO check that node process is already started.
        url = "http://localhost:61417"
-       servirtium_process = subprocess.Popen(["go", "run", "./cmd/todobackend_compatibility.go", "record"])
+       servirtium_process = subprocess.Popen(["go", "run", "./cmd/todobackend_compatibility.go", "record", realUrl])
    elif sys.argv[1] == "playback":
        url = "http://localhost:61417"
-       servirtium_process = subprocess.Popen(["go", "run", "./cmd/todobackend_compatibility.go", "playback"])
+       servirtium_process = subprocess.Popen(["go", "run", "./cmd/todobackend_compatibility.go", "playback", realUrl])
    elif sys.argv[1] == "direct":
        print("showing Http4k Todobackend implementation online without Servirtium in the middle")
        todoSuiteUrl = "https://www.todobackend.com/specs/index.html"
-       url = "https://http4k-todo-backend.herokuapp.com/"
+       url = realUrl
    else:
        print("Second arg should be record or playback")
        exit(10)
