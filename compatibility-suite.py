@@ -10,11 +10,17 @@ import subprocess
 import time
 
 servirtium_process = None
+
+# Pete Hodgson's original is at https://www.todobackend.com/specs/index.html
+# Ours has a few additions to aid it's use in this compatibility suite
+# Playback and Record mode use ours. Direct mode uses Pete's original.
 todoSuiteUrl = "https://servirtium.github.io/compatibility-suite/index.html"
 
-if len(sys.argv) > 1:
+# We used to use the Ruby Sinatra version of the Todobackend, but it is not
+# up as often as the http4k version is
+realUrl = "https://http4k-todo-backend.herokuapp.com"
 
-   realUrl = "https://http4k-todo-backend.herokuapp.com/"
+if len(sys.argv) > 1:
 
    if sys.argv[1] == "record":
        # TODO check that node process is already started.
@@ -41,9 +47,10 @@ if len(sys.argv) > 2:
 
 driver = webdriver.Chrome("chromedriver")
 
-time.sleep(5) # for old workstations
+print("sleep 5 seconds for older workstations")
+time.sleep(5)
 
-driver.get(todoSuiteUrl + "?" + url + "/todos")
+driver.get(todoSuiteUrl + "?" + url)
 try:
     element = WebDriverWait(driver, 300).until(
         EC.text_to_be_present_in_element((By.CLASS_NAME, "passes"), "16")

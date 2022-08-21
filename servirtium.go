@@ -75,7 +75,7 @@ func (s *Impl) initServerPlaybackOnPort(recordFileName string, port int) {
 	r.PathPrefix("/").HandlerFunc(s.playbackHandler(recordFileName))
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"},
-		AllowedMethods:   []string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"},
+		AllowedMethods:   []string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "OPTION", "DELETE", "PATCH"},
 		AllowedHeaders:   []string{"*"},
 		AllowCredentials: true,
 		Debug:            false,
