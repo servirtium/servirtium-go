@@ -56,8 +56,8 @@ func NewServirtium() *Impl {
 }
 
 // StartPlayback ...
-func (s *Impl) StartPlayback(recordFileName string) {
-	s.initServerPlayback(recordFileName)
+func (s *Impl) StartPlayback(recordFileName string, port int) {
+	s.initServerPlaybackOnPort(recordFileName, port)
 	log.Fatal(s.ServerPlayback.ListenAndServe())
 }
 
