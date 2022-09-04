@@ -43,7 +43,7 @@ func main() {
 			regexp.MustCompile(realDomain): "localhost:61417",
 			regexp.MustCompile("https"):    "http",
 		})
-		servirtium.StartRecord(realDomain)
+		servirtium.StartRecord(realDomain, 61417)
 		break
 	case "playback":
 		go func() {
@@ -63,7 +63,7 @@ func main() {
 			regexp.MustCompile(realDomain): "localhost:61417",
 			regexp.MustCompile("https"):    "http",
 		})
-		servirtium.StartPlayback("todobackend_test_suite")
+		servirtium.StartPlayback("todobackend_test_suite", 61417)
 		break
 	default:
 		log.Fatal("Oops, should have been record or playback")
