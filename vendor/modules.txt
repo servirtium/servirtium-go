@@ -1,17 +1,25 @@
 # github.com/davecgh/go-spew v1.1.0
+## explicit
 github.com/davecgh/go-spew/spew
+<<<<<<< HEAD
 # github.com/gorilla/mux v1.8.0
 ## explicit
+=======
+# github.com/gorilla/mux v1.7.4
+## explicit; go 1.12
+>>>>>>> chore: update module name
 github.com/gorilla/mux
 # github.com/pmezard/go-difflib v1.0.0
+## explicit
 github.com/pmezard/go-difflib/difflib
 # github.com/rs/cors v1.8.2
 ## explicit
 github.com/rs/cors
 # github.com/stretchr/testify v1.6.1
-## explicit
+## explicit; go 1.13
 github.com/stretchr/testify/assert
 github.com/stretchr/testify/require
 github.com/stretchr/testify/suite
 # gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
+## explicit
 gopkg.in/yaml.v3

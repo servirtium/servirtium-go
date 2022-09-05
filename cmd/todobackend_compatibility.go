@@ -9,7 +9,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/servirtium/servirtium-go"
+	"servirtium-go"
 )
 
 func main() {
