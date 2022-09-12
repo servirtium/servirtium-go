@@ -1,8 +1,4 @@
 .env
 compatibility_suite_mock_replacements.sh
-<<<<<<< HEAD
 .idea
-vendor
-=======
 /vendor/
->>>>>>> chore: update module name
