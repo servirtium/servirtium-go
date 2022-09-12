@@ -1,4 +1,4 @@
-module servirtium-go
+module github.com/servirtium/servirtium-go
 
 go 1.18
 
