@@ -56,7 +56,7 @@ func NewServirtium() *Impl {
 }
 
 func (s *Impl) StartPlayback(recordFileName string, servirtiumPort int) {
-	s.initServerPlaybackOnPort(recordFileName, servirtiumPort)
+	s.initPlaybackServerOnPort(recordFileName, servirtiumPort)
 	go s.ServerPlayback.ListenAndServe()
 }
 
@@ -68,7 +68,7 @@ func (s *Impl) GetPlaybackURL() string {
 	return fmt.Sprintf("http://%s", s.ServerPlayback.Addr)
 }
 
-func (s *Impl) initServerPlaybackOnPort(recordFileName string, servirtiumPort int) {
+func (s *Impl) initPlaybackServerOnPort(recordFileName string, servirtiumPort int) {
 	r := mux.NewRouter()
 	r.PathPrefix("/").HandlerFunc(s.playbackHandler(recordFileName))
 	c := cors.New(cors.Options{
@@ -211,6 +211,10 @@ func (s *Impl) WriteRecord(recordFileName string) {
 
 func (s *Impl) EndRecord() {
 	s.ServerRecord.Shutdown(context.TODO())
+}
+
+func (s *Impl) GetRecordURL() string {
+	return fmt.Sprintf("http://%s", s.ServerRecord.Addr)
 }
 
 func (s *Impl) initRecordServerOnPort(apiURL string, servirtiumPort int) {

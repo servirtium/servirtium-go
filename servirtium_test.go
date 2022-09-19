@@ -26,7 +26,7 @@ func (s *ServirtiumTestSuite) SetupTest() {
 }
 
 func (s *ServirtiumTestSuite) TestInitServerPlaybackOnPort() {
-	s.servirtium.initServerPlaybackOnPort("mockName", 61416)
+	s.servirtium.initPlaybackServerOnPort("mockName", 61416)
 	s.NotNil(s.servirtium.ServerPlayback)
 	s.servirtium.EndPlayback()
 }
@@ -43,9 +43,9 @@ func (s *ServirtiumTestSuite) TestAnualAvgHandlerPlayback() {
 }
 
 func (s *ServirtiumTestSuite) TestGetPlaybackURL() {
-	s.servirtium.initServerPlaybackOnPort("mockName", 61417)
+	s.servirtium.StartPlayback("mockName", 61417)
 	result := s.servirtium.GetPlaybackURL()
-	s.NotNil(result)
+	s.Equal("http://127.0.0.1:61417", result)
 }
 
 func (s *ServirtiumTestSuite) TestInitRecordServerOnPort() {
@@ -54,10 +54,16 @@ func (s *ServirtiumTestSuite) TestInitRecordServerOnPort() {
 	s.servirtium.EndRecord()
 }
 
-func (s *ServirtiumTestSuite) TesStartRecordServerOnPort() {
-	s.servirtium.initRecordServerOnPort("https://google.com", 61419)
+func (s *ServirtiumTestSuite) TestStartRecordServerOnPort() {
+	s.servirtium.StartRecord("https://google.com", 61419)
 	s.NotNil(s.servirtium.ServerRecord)
 	s.servirtium.EndRecord()
+}
+
+func (s *ServirtiumTestSuite) TestGetRecordURL() {
+	s.servirtium.StartRecord("mockName", 61420)
+	result := s.servirtium.GetRecordURL()
+	s.Equal("http://127.0.0.1:61420", result)
 }
 
 func (s *ServirtiumTestSuite) TestManInTheMiddleHandler() {
