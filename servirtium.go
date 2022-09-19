@@ -19,6 +19,49 @@ import (
 	"github.com/rs/cors"
 )
 
+var templateContent = `
+{{- $RequestMethod := .RequestMethod }}
+{{- $RequestURLPath := .RequestURLPath }}
+{{- $RequestHeader := .RequestHeader }}
+{{- $RequestBody := .RequestBody }}
+{{- $ResponseHeader := .ResponseHeader }}
+{{- $ResponseBody := .ResponseBody }}
+{{- $ResponseStatus := .ResponseStatus }}
+{{- $RecordSequence := .RecordSequence }}
+{{- $ResponseContentType := .ResponseContentType -}}
+## Interaction {{ $RecordSequence }}: {{ $RequestMethod }} {{- $RequestURLPath }}
+
+### Request headers recorded for playback:
+
+` + "```" + `
+{{ range $key, $values := $RequestHeader }}
+  {{- $key}}: {{ range $value := $values}} {{- $value }} {{- end }}
+{{ end }}
+` + "```" + `
+
+### Request body recorded for playback ():
+
+` + "```" + `
+{{ $RequestBody }}
+` + "```" + `
+
+
+### Response headers recorded for playback:
+
+` + "```" + `
+{{ range $key, $values := $ResponseHeader }}
+  {{- $key}}: {{ range $value := $values}} {{- $value }} {{- end }}
+{{ end }}
+` + "```" + `
+
+### Response body recorded for playback ({{- $ResponseStatus }}: {{ $ResponseContentType }}):
+
+` + "```" + `
+{{ $ResponseBody }}
+` + "```" + `
+
+`
+
 // Impl ...
 type Impl struct {
 	ServerPlayback      *http.Server
@@ -127,7 +170,7 @@ func (s *Impl) getPlaybackResponse(data string) (string, map[string]string, stri
 		if strings.HasPrefix(v, "Response body recorded for playback") {
 			responseBody = strings.TrimSpace(strings.Split(v, "```")[1])
 			statusPart := strings.Split(v, "(")[1]
-			statusCode = strings.Split(statusPart, " :")[0]
+			statusCode = strings.Split(statusPart, ": ")[0]
 		}
 	}
 	return responseBody, responseHeaders, statusCode
@@ -374,15 +417,7 @@ func (s *Impl) appendContentInFile(currentContent, newContent string) string {
 }
 
 func (s *Impl) record(params recordData) {
-	workingPath, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-	content, err := ioutil.ReadFile(fmt.Sprintf("%s/template.tmpl", workingPath))
-	if err != nil {
-		log.Fatal(err)
-	}
-	tmpl, err := template.New("template").Parse(string(content))
+	tmpl, err := template.New("template").Parse(templateContent)
 	if err != nil {
 		log.Fatal(err)
 	}
