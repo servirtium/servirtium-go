@@ -55,19 +55,17 @@ func NewServirtium() *Impl {
 	}
 }
 
-// StartPlayback ...
 func (s *Impl) StartPlayback(recordFileName string, servirtiumPort int) {
 	s.initServerPlaybackOnPort(recordFileName, servirtiumPort)
-	log.Fatal(s.ServerPlayback.ListenAndServe())
+	go s.ServerPlayback.ListenAndServe()
 }
 
-// EndPlayback ...
 func (s *Impl) EndPlayback() {
 	s.ServerPlayback.Shutdown(context.TODO())
 }
 
-func (s *Impl) initServerPlayback(recordFileName string) {
-	s.initServerPlaybackOnPort(recordFileName, 61417)
+func (s *Impl) GetPlaybackURL() string {
+	return fmt.Sprintf("http://%s", s.ServerPlayback.Addr)
 }
 
 func (s *Impl) initServerPlaybackOnPort(recordFileName string, servirtiumPort int) {
@@ -128,7 +126,8 @@ func (s *Impl) getPlaybackResponse(data string) (string, map[string]string, stri
 		}
 		if strings.HasPrefix(v, "Response body recorded for playback") {
 			responseBody = strings.TrimSpace(strings.Split(v, "```")[1])
-			statusCode = strings.Split(strings.Split(v, "(")[1], ": ")[0]
+			statusPart := strings.Split(v, "(")[1]
+			statusCode = strings.Split(statusPart, " :")[0]
 		}
 	}
 	return responseBody, responseHeaders, statusCode
@@ -186,17 +185,14 @@ func (s *Impl) playbackHandler(recordFileName string) func(w http.ResponseWriter
 
 		w.WriteHeader(statusCode)
 		_, _ = w.Write([]byte(callerResponseBody))
-		return
 	}
 }
 
-// StartRecord ...
 func (s *Impl) StartRecord(apiURL string, servirtiumPort int) {
 	s.initRecordServerOnPort(apiURL, servirtiumPort)
-	log.Fatal(s.ServerRecord.ListenAndServe())
+	go s.ServerRecord.ListenAndServe()
 }
 
-// WriteRecord ...
 func (s *Impl) WriteRecord(recordFileName string) {
 	workingPath, err := os.Getwd()
 	if err != nil {
@@ -213,13 +209,8 @@ func (s *Impl) WriteRecord(recordFileName string) {
 	}
 }
 
-// EndRecord ...
 func (s *Impl) EndRecord() {
 	s.ServerRecord.Shutdown(context.TODO())
-}
-
-func (s *Impl) initRecordServer(apiURL string) {
-	s.initRecordServerOnPort(apiURL, 61417)
 }
 
 func (s *Impl) initRecordServerOnPort(apiURL string, servirtiumPort int) {
@@ -304,9 +295,14 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 
 		// Make a request
 		proxyRequest, err := http.NewRequest(r.Method, url, bytes.NewReader([]byte(proxyRequestBody)))
+		if err != nil {
+			log.Fatal(err)
+		}
 		proxyRequest.Header = newCallerProxyRequestHeader
 		response, err := http.DefaultClient.Do(proxyRequest)
-
+		if err != nil {
+			log.Fatal(err)
+		}
 		// Clone response body
 		responseBody, err := ioutil.ReadAll(response.Body)
 		if err != nil {
@@ -356,7 +352,6 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 	}
 }
 
-// checkMarkdownExists ...
 func (s *Impl) checkMarkdownExists(path string) bool {
 	if _, err := os.Stat(path); err != nil {
 		if os.IsNotExist(err) {
@@ -406,62 +401,50 @@ func (s *Impl) record(params recordData) {
 	s.interactionSequence = s.interactionSequence + 1
 }
 
-// SetCallerRequestHeadersRemoval ...
 func (s *Impl) SetCallerRequestHeadersRemoval(headers []string) {
 	s.callerRequestHeadersRemoval = headers
 }
 
-// SetCallerRequestHeaderReplacements ...
 func (s *Impl) SetCallerRequestHeaderReplacements(replaceRegex map[*regexp.Regexp]string) {
 	s.callerRequestHeaderReplacements = replaceRegex
 }
 
-// SetCallerRequestBodyReplacement ...
 func (s *Impl) SetCallerRequestBodyReplacement(replaceRegex map[*regexp.Regexp]string) {
 	s.callerRequestBodyReplacement = replaceRegex
 }
 
-// SetRecordRequestHeadersRemoval ...
 func (s *Impl) SetRecordRequestHeadersRemoval(headers []string) {
 	s.recordRequestHeadersRemoval = headers
 }
 
-// SetRecordRequestHeaderReplacements ...
 func (s *Impl) SetRecordRequestHeaderReplacements(replaceRegex map[*regexp.Regexp]string) {
 	s.recordRequestHeaderReplacements = replaceRegex
 }
 
-// SetRecordRequestBodyReplacement ...
 func (s *Impl) SetRecordRequestBodyReplacement(replaceRegex map[*regexp.Regexp]string) {
 	s.recordRequestBodyReplacement = replaceRegex
 }
 
-// SetCallerResponseHeadersRemoval ...
 func (s *Impl) SetCallerResponseHeadersRemoval(headers []string) {
 	s.callerResponseHeadersRemoval = headers
 }
 
-// SetCallerResponseHeaderReplacements ...
 func (s *Impl) SetCallerResponseHeaderReplacements(replaceRegex map[*regexp.Regexp]string) {
 	s.callerResponseHeaderReplacements = replaceRegex
 }
 
-// SetCallerResponseBodyReplacement ...
 func (s *Impl) SetCallerResponseBodyReplacement(replaceRegex map[*regexp.Regexp]string) {
 	s.callerResponseBodyReplacement = replaceRegex
 }
 
-// SetRecordResponseHeadersRemoval ...
 func (s *Impl) SetRecordResponseHeadersRemoval(headers []string) {
 	s.recordResponseHeadersRemoval = headers
 }
 
-// SetRecordResponseHeaderReplacements ...
 func (s *Impl) SetRecordResponseHeaderReplacements(replaceRegex map[*regexp.Regexp]string) {
 	s.recordResponseHeaderReplacements = replaceRegex
 }
 
-// SetRecordResponseBodyReplacement ...
 func (s *Impl) SetRecordResponseBodyReplacement(replaceRegex map[*regexp.Regexp]string) {
 	s.recordResponseBodyReplacement = replaceRegex
 }

@@ -25,8 +25,14 @@ func (s *ServirtiumTestSuite) SetupTest() {
 	s.servirtium = servirtium
 }
 
-func (s *ServirtiumTestSuite) TestInitServerPlayback() {
-	s.servirtium.initServerPlayback("mockName")
+func (s *ServirtiumTestSuite) TestInitServerPlaybackOnPort() {
+	s.servirtium.initServerPlaybackOnPort("mockName", 61416)
+	s.NotNil(s.servirtium.ServerPlayback)
+	s.servirtium.EndPlayback()
+}
+
+func (s *ServirtiumTestSuite) TestStartServerPlaybackOnPort() {
+	s.servirtium.StartPlayback("mockName", 61416)
 	s.NotNil(s.servirtium.ServerPlayback)
 	s.servirtium.EndPlayback()
 }
@@ -36,8 +42,20 @@ func (s *ServirtiumTestSuite) TestAnualAvgHandlerPlayback() {
 	s.NotNil(result)
 }
 
-func (s *ServirtiumTestSuite) TestInitRecordServer() {
-	s.servirtium.initRecordServer("https://google.com")
+func (s *ServirtiumTestSuite) TestGetPlaybackURL() {
+	s.servirtium.initServerPlaybackOnPort("mockName", 61417)
+	result := s.servirtium.GetPlaybackURL()
+	s.NotNil(result)
+}
+
+func (s *ServirtiumTestSuite) TestInitRecordServerOnPort() {
+	s.servirtium.initRecordServerOnPort("https://google.com", 61418)
+	s.NotNil(s.servirtium.ServerRecord)
+	s.servirtium.EndRecord()
+}
+
+func (s *ServirtiumTestSuite) TesStartRecordServerOnPort() {
+	s.servirtium.initRecordServerOnPort("https://google.com", 61419)
 	s.NotNil(s.servirtium.ServerRecord)
 	s.servirtium.EndRecord()
 }
