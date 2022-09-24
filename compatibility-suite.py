@@ -26,9 +26,10 @@ todoSuiteUrl = "https://servirtium.github.io/compatibility-suite/index.html"
 # their free model.
 # realUrl = "https://todo-backend-sinatra.herokuapp.com"
 # realUrl = "https://http4k-todo-backend.herokuapp.com"
-# So se use our own version of http4k-todo-backend via Docker:
-
+# So we use our own version of http4k-todo-backend via Docker.
+#  See https://github.com/servirtium/todobackend-for-compatibility-kit for _build_ instructions
 realUrl = "http://localhost:54321"
+
 docker_stopped = False
 servirtium_stopped = False
 def stop_docker():
