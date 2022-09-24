@@ -1,1 +1,0 @@
-servirtium-go-standalone-server
