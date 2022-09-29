@@ -25,10 +25,11 @@ todoSuiteUrl = "https://servirtium.github.io/compatibility-suite/index.html"
 # up as often as the http4k version, but both are unavailable as Heroku changed
 # their free model.
 # realUrl = "https://todo-backend-sinatra.herokuapp.com"
-# realUrl = "https://http4k-todo-backend.herokuapp.com"
+realUrl = "https://todo-backend-rocket-rust.herokuapp.com/"
 # So we use our own version of http4k-todo-backend via Docker.
 #  See https://github.com/servirtium/todobackend-for-compatibility-kit for _build_ instructions
-realUrl = "http://localhost:54321"
+# realUrl = "http://localhost:54321"
+extraURL = ""
 
 docker_stopped = False
 servirtium_stopped = False
@@ -63,8 +64,7 @@ signal.signal(signal.SIGINT, ctrlc_handler)
 if len(sys.argv) > 1:
 
     try:
-        if sys.argv[1] == "record" or sys.argv[1] == "direct":
-
+        if "54321" in realUrl and (sys.argv[1] == "record" or sys.argv[1] == "direct"):
             dkr = docker.from_env()
             dkrCtr = dkr.containers.run("todobackend-api-for-servirtium-development", ports={'54321/tcp': 54321}, detach=True)
     except BaseException as err:
@@ -81,7 +81,7 @@ if len(sys.argv) > 1:
         servirtium_process = subprocess.Popen(["go", "run", "./cmd/todobackend_compatibility.go", "playback", realUrl], stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
     elif sys.argv[1] == "direct":
         print("showing Http4k Todobackend implementation online without Servirtium in the middle")
-        todoSuiteUrl = "http://www.todobackend.com/specs/index.html"
+        extraURL = "&noServirtium"
         url = realUrl
     else:
         print("Second arg should be record or playback")
@@ -100,7 +100,7 @@ driver = webdriver.Chrome("chromedriver")
 print("sleep 5 seconds for older workstations")
 time.sleep(5)
 
-driver.get(todoSuiteUrl + "?" + url)
+driver.get(todoSuiteUrl + "?" + url + extraURL)
 try:
     element = WebDriverWait(driver, 300).until(
         EC.text_to_be_present_in_element((By.CLASS_NAME, "passes"), "16")
@@ -108,8 +108,6 @@ try:
     print("Compatibility suite: all 16 tests passed")
 except BaseException as ex:
     print("Compatibility suite: DID NOT finish with 16 passes. See browser frame.")
-
-# TODO warn that node process was not started.
 
 print("mode: " + sys.argv[1])
 
