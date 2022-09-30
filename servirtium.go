@@ -2,8 +2,10 @@ package servirtium
 
 import (
 	"bytes"
+	"compress/gzip"
 	"context"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -350,8 +352,14 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 		if err != nil {
 			log.Fatal(err)
 		}
-		// Clone response body
-		responseBody, err := ioutil.ReadAll(response.Body)
+		var rspReader io.ReadCloser
+		switch response.Header.Get("Content-Encoding") {
+		case "gzip":
+			rspReader, _ = gzip.NewReader(response.Body)
+		default:
+			rspReader = response.Body
+		}
+		responseBody, err := io.ReadAll(rspReader)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
