@@ -399,11 +399,28 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 			responseHeaderValue := strings.Join(v, ",")
 			w.Header().Set(k, responseHeaderValue)
 		}
-		if response.Header.Get("Content-Length") != "" {
-			w.Header().Set("Content-Length", fmt.Sprintf("%d", utf8.RuneCountInString(newCallerResponseBody)))
-		}
 		w.WriteHeader(response.StatusCode)
-		w.Write([]byte(newCallerResponseBody))
+		switch response.Header.Get("Content-Encoding") {
+		case "gzip":
+			var b bytes.Buffer
+			gz := gzip.NewWriter(&b)
+			if _, err := gz.Write([]byte(newCallerResponseBody)); err != nil {
+				log.Fatal(err)
+			}
+			if err := gz.Close(); err != nil {
+				log.Fatal(err)
+			}
+			i := b.Bytes()
+			if response.Header.Get("Content-Length") != "" {
+				w.Header().Set("Content-Length", fmt.Sprintf("%d", i))
+			}
+			w.Write(i)
+		default:
+			if response.Header.Get("Content-Length") != "" {
+				w.Header().Set("Content-Length", fmt.Sprintf("%d", utf8.RuneCountInString(newCallerResponseBody)))
+			}
+			w.Write([]byte(newCallerResponseBody))
+		}
 	}
 }
 
