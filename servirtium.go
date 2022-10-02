@@ -251,6 +251,7 @@ func (s *Impl) StartRecord(apiURL string, servirtiumPort int) {
 func (s *Impl) WriteRecord(recordFileName string) {
 	workingPath, err := os.Getwd()
 	if err != nil {
+		lastError = err
 		log.Fatal(err)
 	}
 	filePath := fmt.Sprintf("%s/mock/%s.md", workingPath, recordFileName)
@@ -260,6 +261,7 @@ func (s *Impl) WriteRecord(recordFileName string) {
 	}
 	err = ioutil.WriteFile(filePath, []byte(s.content), os.ModePerm)
 	if err != nil {
+		lastError = err
 		log.Fatal(err)
 	}
 }
@@ -420,9 +422,11 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 			var b bytes.Buffer
 			gz := gzip.NewWriter(&b)
 			if _, err := gz.Write([]byte(newCallerResponseBody)); err != nil {
+				lastError = err
 				log.Fatal(err)
 			}
 			if err := gz.Close(); err != nil {
+				lastError = err
 				log.Fatal(err)
 			}
 			i := b.Bytes()
@@ -441,6 +445,7 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 
 func (s *Impl) checkMarkdownExists(path string) bool {
 	if _, err := os.Stat(path); err != nil {
+		lastError = err
 		if os.IsNotExist(err) {
 			return false
 		}
@@ -459,6 +464,7 @@ func (s *Impl) appendContentInFile(currentContent, newContent string) string {
 func (s *Impl) record(params recordData) {
 	tmpl, err := template.New("template").Parse(templateContent)
 	if err != nil {
+		lastError = err
 		log.Fatal(err)
 	}
 	data := recordData{
