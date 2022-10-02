@@ -454,6 +454,7 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 				log.Fatal(err)
 			}
 			i := b.Bytes()
+			w.Header().Set("Content-Encoding", "gzip")
 			w.Header().Set("Content-Length", fmt.Sprintf("%d", i))
 			w.Write(i)
 		default:
