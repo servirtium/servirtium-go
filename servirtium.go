@@ -202,7 +202,7 @@ func replaceHeadersPlayback(headers map[string]string, replaceItems map[*regexp.
 
 var lastError error = nil
 
-func (s *impl) getLastError() error {
+func (s *Impl) getLastError() error {
 	return lastError
 }
 
