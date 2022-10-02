@@ -239,6 +239,30 @@ func (s *Impl) playbackHandler(recordFileName string) func(w http.ResponseWriter
 		}
 
 		w.WriteHeader(statusCode)
+
+		switch w.Header().Get("Content-Encoding") {
+		case "gzip":
+			var b bytes.Buffer
+			gz := gzip.NewWriter(&b)
+			if _, err := gz.Write([]byte(callerResponseBody)); err != nil {
+				lastError = err
+				log.Fatal(err)
+			}
+			if err := gz.Close(); err != nil {
+				lastError = err
+				log.Fatal(err)
+			}
+			i := b.Bytes()
+			if w.Header().Get("Content-Length") != "" {
+				w.Header().Set("Content-Length", fmt.Sprintf("%d", i))
+			}
+			w.Write(i)
+		default:
+			if w.Header().Get("Content-Length") != "" {
+				w.Header().Set("Content-Length", fmt.Sprintf("%d", utf8.RuneCountInString(callerResponseBody)))
+			}
+			w.Write([]byte(callerResponseBody))
+		}
 		_, _ = w.Write([]byte(callerResponseBody))
 	}
 }
