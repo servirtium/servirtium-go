@@ -90,6 +90,7 @@ type Impl struct {
 
 // NewServirtium ...
 func NewServirtium() *Impl {
+	lastError = nil
 	return &Impl{
 		interactionSequence:          0,
 		content:                      "",
@@ -199,14 +200,22 @@ func replaceHeadersPlayback(headers map[string]string, replaceItems map[*regexp.
 	return headers
 }
 
+var lastError error = nil
+
+func (s *impl) getLastError() error {
+	return lastError
+}
+
 func (s *Impl) playbackHandler(recordFileName string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		workingPath, err := os.Getwd()
 		if err != nil {
+			lastError = err
 			log.Fatal(err)
 		}
 		data, err := ioutil.ReadFile(fmt.Sprintf("%s/mock/%s.md", workingPath, recordFileName))
 		if err != nil {
+			lastError = err
 			w.WriteHeader(http.StatusInternalServerError)
 			_, _ = w.Write([]byte("Internal Server Error"))
 			return
@@ -223,6 +232,7 @@ func (s *Impl) playbackHandler(recordFileName string) func(w http.ResponseWriter
 		s.interactionSequence = s.interactionSequence + 1
 		statusCode, err := strconv.Atoi(status)
 		if err != nil {
+			lastError = err
 			w.WriteHeader(http.StatusInternalServerError)
 			_, _ = w.Write([]byte("Internal Server Error"))
 			return
@@ -325,10 +335,12 @@ func replaceContent(content string, maskItems map[*regexp.Regexp]string) string 
 }
 
 func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.Request) {
+	lastError = nil
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Clone request body
 		requestBody, err := ioutil.ReadAll(r.Body)
 		if err != nil {
+			lastError = err
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
@@ -345,11 +357,13 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 		// Make a request
 		proxyRequest, err := http.NewRequest(r.Method, url, bytes.NewReader([]byte(proxyRequestBody)))
 		if err != nil {
+			lastError = err
 			log.Fatal(err)
 		}
 		proxyRequest.Header = newCallerProxyRequestHeader
 		response, err := http.DefaultClient.Do(proxyRequest)
 		if err != nil {
+			lastError = err
 			log.Fatal(err)
 		}
 		var rspReader io.ReadCloser
@@ -361,6 +375,7 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 		}
 		responseBody, err := io.ReadAll(rspReader)
 		if err != nil {
+			lastError = err
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
