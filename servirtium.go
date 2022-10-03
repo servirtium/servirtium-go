@@ -364,10 +364,10 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 	lastError = nil
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Clone request body
-		requestBody, err := ioutil.ReadAll(r.Body)
+		requestBody, err := io.ReadAll(r.Body)
 		if err != nil {
 			lastError = err
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			http.Error(w, "Servirtium Recorder/1: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
 		url := fmt.Sprintf("%s%s", apiURL, r.RequestURI)
@@ -390,7 +390,8 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 		response, err := http.DefaultClient.Do(proxyRequest)
 		if err != nil {
 			lastError = err
-			log.Fatal(err)
+			http.Error(w, "Servirtium Recorder/2: "+err.Error(), http.StatusInternalServerError)
+			return
 		}
 		var rspReader io.ReadCloser
 		switch response.Header.Get("Content-Encoding") {
@@ -402,7 +403,7 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 		responseBody, err := io.ReadAll(rspReader)
 		if err != nil {
 			lastError = err
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			http.Error(w, "Servirtium Recorder/3: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
 
@@ -447,11 +448,13 @@ func (s *Impl) recordHandler(apiURL string) func(w http.ResponseWriter, r *http.
 			gz := gzip.NewWriter(&bytesBuffer)
 			if _, err := gz.Write([]byte(newCallerResponseBody)); err != nil {
 				lastError = err
-				log.Fatal(err)
+				http.Error(w, "Servirtium Recorder/4: "+err.Error(), http.StatusInternalServerError)
+				return
 			}
 			if err := gz.Close(); err != nil {
 				lastError = err
-				log.Fatal(err)
+				http.Error(w, "Servirtium Recorder/5: "+err.Error(), http.StatusInternalServerError)
+				return
 			}
 			contentBytes := bytesBuffer.Bytes()
 			w.Header().Set("Content-Length", fmt.Sprintf("%d", utf8.RuneCount(contentBytes)))
