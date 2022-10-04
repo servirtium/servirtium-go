@@ -117,16 +117,8 @@ func (s *Impl) GetPlaybackURL() string {
 func (s *Impl) initPlaybackServerOnPort(recordFileName string, servirtiumPort int) {
 	r := mux.NewRouter()
 	r.PathPrefix("/").HandlerFunc(s.playbackHandler(recordFileName))
-	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"*"},
-		AllowedMethods:   []string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "OPTION", "DELETE", "PATCH"},
-		AllowedHeaders:   []string{"*"},
-		AllowCredentials: true,
-		Debug:            false,
-	})
 	srv := &http.Server{
-		Handler: c.Handler(r),
-		Addr:    "127.0.0.1:" + strconv.Itoa(servirtiumPort),
+		Addr: "127.0.0.1:" + strconv.Itoa(servirtiumPort),
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
