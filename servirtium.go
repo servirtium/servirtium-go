@@ -16,9 +16,6 @@ import (
 	"text/template"
 	"time"
 	"unicode/utf8"
-
-	"github.com/gorilla/mux"
-	"github.com/rs/cors"
 )
 
 var templateContent = `
@@ -115,10 +112,9 @@ func (s *Impl) GetPlaybackURL() string {
 }
 
 func (s *Impl) initPlaybackServerOnPort(recordFileName string, servirtiumPort int) {
-	r := mux.NewRouter()
-	r.PathPrefix("/").HandlerFunc(s.playbackHandler(recordFileName))
 	srv := &http.Server{
-		Addr: "127.0.0.1:" + strconv.Itoa(servirtiumPort),
+		Handler: http.HandlerFunc(s.playbackHandler(recordFileName)),
+		Addr:    "127.0.0.1:" + strconv.Itoa(servirtiumPort),
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
@@ -291,17 +287,8 @@ func (s *Impl) GetRecordURL() string {
 }
 
 func (s *Impl) initRecordServerOnPort(apiURL string, servirtiumPort int) {
-	r := mux.NewRouter()
-	r.PathPrefix("/").HandlerFunc(s.recordHandler(apiURL))
-	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"*"},
-		AllowedMethods:   []string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"},
-		AllowedHeaders:   []string{"*"},
-		AllowCredentials: true,
-		Debug:            false,
-	})
 	srv := &http.Server{
-		Handler: c.Handler(r),
+		Handler: http.HandlerFunc(s.recordHandler(apiURL)),
 		Addr:    "127.0.0.1:" + strconv.Itoa(servirtiumPort),
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
